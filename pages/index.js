@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <NavBar className="mb-auto" />
-      <div className="flex-grow pb-10 dark: bg-gray-800" >
+      <div className="flex-grow pb-10 bg-gray-100 dark:bg-gray-800" >
         <Hero />
         <Feature />
         <Pricing />
