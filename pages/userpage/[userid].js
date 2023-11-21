@@ -36,10 +36,9 @@ export default function Userpage() {
         },
     ];
     return (
-        // <div className="flex flex-col bg-white dark: bg-gray-800 ">
-        <div className="flex flex-col items-center justify-center bg-white dark:bg-gray-800">
+        <div className="flex flex-col bg-white dark: bg-gray-800 ">
             <NavBar />
-            <div className="flex flex-row gap-8 py-6">
+            <div className="flex flex-row justify-center gap-8 py-6">
                 <div>
                     <Avatar />
                 </div>
