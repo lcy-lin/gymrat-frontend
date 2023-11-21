@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
-import NavBar from "@/components/NavBar";
+// import NavBar from "@/components/NavBar";
+import Header from "@/components/Header";
 import Avatar from "@/components/userpage/Avatar";
 import ActCard from "@/components/userpage/ActCard";
 import ChartBar from "@/components/userpage/ChartBar";
@@ -37,7 +38,7 @@ export default function Userpage() {
     ];
     return (
         <div className="flex flex-col bg-white dark: bg-gray-800 ">
-            <NavBar />
+            <Header />
             <div className="flex flex-row justify-center gap-8 py-6">
                 <div>
                     <Avatar />
