@@ -43,7 +43,7 @@ const Hero = ({
                 Gym Rat is a web application that allows users to track their
                 workouts and calculate their BMI, BMR, and TDEE.
               </p>
-              <ButtonPrimary>Start Your Jouney</ButtonPrimary>
+              <ButtonPrimary>Add New Avtivity Records</ButtonPrimary>
             </div>
             <div className="flex w-full">
               <motion.div className="h-full w-full" variants={scrollAnimation}>
