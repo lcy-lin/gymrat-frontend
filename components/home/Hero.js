@@ -36,15 +36,14 @@ const Hero = ({
             className="grid grid-flow-row sm:grid-flow-col grid-rows-2 md:grid-rows-1 sm:grid-cols-2 gap-8 py-6 sm:py-16"
             variants={scrollAnimation}>
             <div className=" flex flex-col justify-center items-start row-start-2 sm:row-start-1">
-              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-medium text-black-600 leading-normal dark:text-white">
+              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-medium text-gray-800 leading-normal dark:text-white">
                 Sculpt Your Body, Calculate Your Victory with <strong className="text-blue-400">GymRat</strong>.
               </h1>
               <p className="text-black-500 mt-4 mb-6 dark:text-white">
                 Gym Rat is a web application that allows users to track their
                 workouts and calculate their BMI, BMR, and TDEE.
               </p>
-              <ButtonPrimary color="red">Add New Activity Records</ButtonPrimary>
-              <ButtonPrimary color="blue">Add New Meal Record</ButtonPrimary>
+              <ButtonPrimary color="blue">Start Your Journey</ButtonPrimary>
             </div>
             <div className="flex w-full">
               <motion.div className="h-full w-full" variants={scrollAnimation}>

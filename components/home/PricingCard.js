@@ -18,7 +18,7 @@ export default function PricingCard({children}) {
     { text: 'Challenges and Competitions', iconColor: isPremiumPlan ? 'blue-400' : 'gray-400', textColor: isPremiumPlan ? 'gray-300' : 'gray-500' },
   ];
   return (
-    <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+    <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
         <h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">{children}</h5>
         <div className="flex items-baseline text-gray-900 dark:text-white">
             <span className="text-3xl font-semibold">$</span>
@@ -27,11 +27,11 @@ export default function PricingCard({children}) {
         </div>
         <ul role="list" className="space-y-5 my-7">
             {featureItems.map((item, index) => (
-            <li key={index} className={`flex ${item.iconColor == 'blue-600' ? '' : 'line-through decoration-gray-500'}`}>
+            <li key={index} className={`flex ${item.iconColor == ('blue-400' || 'blue-600') ? '' : 'line-through decoration-gray-500'}`}>
                 <svg className={`flex-shrink-0 w-4 h-4 text-${item.iconColor} dark:${item.iconColor}`} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
                 </svg>
-                <span className={`text-base font-normal leading-tight text-${item.textColor} ms-3`}>{item.text}</span>
+                <span className={`text-base font-normal leading-tight text-gray-600 dark:text-${item.textColor} ms-3`}>{item.text}</span>
             </li>
             ))}
         </ul>
