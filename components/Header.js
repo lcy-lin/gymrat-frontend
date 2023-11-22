@@ -29,16 +29,16 @@ export default function Header() {
           </Link>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
-          <Link href="dashboard" className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
+          <Link href="/dashboard" className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
             Dashboard
           </Link>
-          <Link href="activities" className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
+          <Link href="/activities" className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
             Activities
           </Link>
-          <Link href="meals" className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
+          <Link href="/meals" className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
             Meals
           </Link>
-          <Link href="body" className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
+          <Link href="/body" className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
             Body
           </Link>
         </div>

@@ -38,7 +38,7 @@ export default function BasicLineChart() {
     }, []);
   return (
     <ThemeProvider theme={preferredTheme === 'dark' ? darkTheme : lightTheme}>
-      <div className="flex flex-col items-start border dark:border-gray-600 m-2 rounded-lg">
+      <div className="flex flex-col items-start border dark:border-gray-600 dark:bg-gray-800 m-2 rounded-lg">
         <h1 className="text-black dark:text-white text-2xl font-semibold ml-4 mt-4">Daily Weight Records</h1>
         <LineChart
           xAxis={[

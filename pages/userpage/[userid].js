@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 // import NavBar from "@/components/NavBar";
 import Header from "@/components/Header";
 import Avatar from "@/components/userpage/Avatar";
+import OrgCard from "@/components/userpage/OrgCard";
 import ActCard from "@/components/userpage/ActCard";
 import ChartBar from "@/components/userpage/ChartBar";
 import BasicLineChart from "@/components/userpage/LineChart";
@@ -10,6 +11,21 @@ export default function Userpage() {
     const router = useRouter()
     const query = router.query
     const userid = query?.userid;
+    const userData = {
+        id: 1,
+        name: 'John Doe',
+        email: 'johndoe@gmail.com',
+        role: ['admin', 'student'], // 'student' or 'coach' or 'admin'
+        organizations: [ {
+                id: 1,
+                name: 'University of Waterloo'
+            },
+            {
+                id: 2,
+                name: 'University of Toronto'
+            }],
+        created_at: '2021-10-01 12:00:00',
+    }
     const mockData = [
         {
             'id': '1', 
@@ -37,11 +53,12 @@ export default function Userpage() {
         },
     ];
     return (
-        <div className="flex flex-col bg-white dark: bg-gray-800 ">
+        <div className="flex flex-col bg-white dark:bg-gray-800 ">
             <Header />
-            <div className="flex flex-row justify-center gap-8 py-6">
-                <div>
-                    <Avatar />
+            <div className="flex flex-row justify-center gap-4 py-6">
+                <div className="flex flex-col gap-2">
+                    <Avatar data={userData} />
+                    {/* <OrgCard orgs={userData?.organizations}/> */}
                 </div>
                 <div>
                     <div className="flex items-center">
