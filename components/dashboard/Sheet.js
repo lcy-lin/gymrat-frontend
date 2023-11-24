@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Row from "./sheet/Row";
+import Selector from "./Selector";
 
 export default function Sheet() {
   const [numOfRows, setNumOfRows] = useState(1);
@@ -10,6 +11,7 @@ export default function Sheet() {
     setNumOfRows(prevNum => prevNum - 1);
   };
   return (
+
     <div className="flex flex-col items-center mb-2">
       {Array.from({ length: numOfRows }, (_, index) => (
         <Row key={index + 1} num={index + 1} />
