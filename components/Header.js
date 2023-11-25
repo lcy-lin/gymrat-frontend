@@ -21,9 +21,6 @@ export default function Header() {
           <Link href="/meals" className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
             Meals
           </Link>
-          <Link href="/body" className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
-            Body
-          </Link>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <AccountMenu />
