@@ -23,6 +23,10 @@ export default function SignIn() {
                     maxAge: 30 * 24 * 60 * 60,
                     path: "/",
                 });
+                setCookie(null, "userId", res.data.data.user.id, {
+                    maxAge: 30 * 24 * 60 * 60,
+                    path: "/",
+                });
                 router.push('/dashboard');
             }).catch((err) => {
                 AlertMessages.error(err.response.data.error);

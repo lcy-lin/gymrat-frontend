@@ -1,4 +1,7 @@
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { parseCookies } from "nookies";
 // import NavBar from "@/components/NavBar";
 import Header from "@/components/Header";
 import Avatar from "@/components/userpage/Avatar";
@@ -8,24 +11,25 @@ import ChartBar from "@/components/userpage/ChartBar";
 import BasicLineChart from "@/components/userpage/LineChart";
 import Timeline from "@/components/userpage/Timeline";
 export default function Userpage() {
+    const cookies = parseCookies();
+    const [userData, setUserData] = useState(null);
     const router = useRouter()
     const query = router.query
     const userid = query?.userid;
-    const userData = {
-        id: 1,
-        name: 'John Doe',
-        email: 'johndoe@gmail.com',
-        role: ['admin', 'student'], // 'student' or 'coach' or 'admin'
-        organizations: [ {
-                id: 1,
-                name: 'University of Waterloo'
+    useEffect(() => {
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/${userid}/profile`,{
+            headers: {
+                Authorization: `Bearer ${cookies.accessToken}`,
             },
-            {
-                id: 2,
-                name: 'University of Toronto'
-            }],
-        created_at: '2021-10-01 12:00:00',
-    }
+        }).then((res) => {
+            setUserData(res.data.data.user);
+            console.log(res);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }, [cookies.accessToken, userid]);
+    
+
     const mockData = [
         {
             'id': '1', 
