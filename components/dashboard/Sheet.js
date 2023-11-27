@@ -1,17 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { parseCookies } from "nookies";
 import Row from "./sheet/Row";
+import MultiSelect from "./Select";
+
 
 export default function Sheet() {
+  const cookie = parseCookies();
   const [numOfRows, setNumOfRows] = useState(1);
+  const [rowData, setRowData] = useState([]);
+  const [tags, setTags] = useState([]);
   const addMove = () => {
     setNumOfRows(prevNum => prevNum + 1);
   };    
   const deleteMove = () => {
     setNumOfRows(prevNum => prevNum - 1);
   };
+  const createWorkout = async () => {
+    const allData = rowData.map((row) => row.data);
+    axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/activities/create`, {
+      data: {
+        user_id: cookie.userId,
+        allData,
+      },
+    },{
+      headers: {
+        Authorization: `Bearer ${cookie.accessToken}`,
+      },
+    }).then((response) => {
+      console.log(response.data);
+    }).catch((error) => {
+      console.error("Error creating workout:", error);
+    });
+  };
   return (
 
     <div className="flex flex-col items-center mb-2">
+      <MultiSelect setTags={setTags}/>
       {Array.from({ length: numOfRows }, (_, index) => (
         <Row key={index + 1} num={index + 1} />
       ))}
