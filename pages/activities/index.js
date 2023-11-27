@@ -18,7 +18,6 @@ export default function Activities() {
             },
         }).then((res) => {
             setActData(res.data.activities);
-            console.log(res);
         }).catch((err) => {
             console.log(err);
         });

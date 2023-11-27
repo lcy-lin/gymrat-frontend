@@ -5,7 +5,7 @@ export default function TagBadge({tag}) {
         'legs': 'bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500',
         'arms': 'bg-red-100 text-red-800 dark:bg-red-800/30 dark:text-red-500',
         'shoulders': 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800/30 dark:text-yellow-500',
-        'others': 'bg-white/[.1] text-white', 
+        'others': 'bg-green-100 dark:bg-white/[.1] dark:text-white', 
       };
     return (
         <span className={`inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium m-1 ${parts[tag]}`}>{tag}</span>
