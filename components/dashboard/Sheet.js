@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Row from "./sheet/Row";
-import Selector from "./Selector";
 
 export default function Sheet() {
   const [numOfRows, setNumOfRows] = useState(1);
