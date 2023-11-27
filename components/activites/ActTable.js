@@ -55,26 +55,39 @@ const columns = [
     minWidth: 100,
   },
   {
-    id: 'pub',
+    id: 'publicity',
     label: 'Public',
     minWidth: 90,
     align: 'center',
   },
 ];
 
-function createData(id, time, tags, description, calories, pub) {
+function createData(id, time, tags, description, calories, publicity) {
   calories = -calories;
   time = time.split(' ')[0].replaceAll('-', '/');
-  pub = pub === 'true' ? '✅' : '❌';
-  return { id, time, tags, description, calories, pub };
+  publicity = publicity === 0 ? '✅' : '❌';
+  return { id, time, tags, description, calories, publicity };
 };
 
-const rows = [
-  createData('1', '2021-10-01 12:00:00',['arms', 'chest'], 'new pr 100kg 5 reps', -200, 'true'),
-  createData('2', '2021-10-02 12:00:00',['legs'], 'new pr 200kg 10 reps', -350, 'false'),
-];
+// const rows = [
+//   createData('1', '2021-10-01 12:00:00',['arms', 'chest'], 'new pr 100kg 5 reps', -200, 'true'),
+//   createData('2', '2021-10-02 12:00:00',['legs'], 'new pr 200kg 10 reps', -350, 'false'),
+// ];
 
-export default function ActTable({selectedTag}) {
+
+export default function ActTable({selectedTag, actData}) {
+  const rows = actData
+  ? actData?.map((activity) =>
+      createData(
+        activity.id,
+        activity.created_at,
+        activity.tags,
+        activity.description,
+        -200,
+        activity.publicity
+      )
+    )
+  : [];
   const [preferredTheme, setPreferredTheme] = React.useState('light');
 
   React.useEffect(() => {

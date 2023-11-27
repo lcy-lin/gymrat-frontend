@@ -15,7 +15,6 @@ import Link from 'next/link';
 export default function AccountMenu() {
   const cookies = parseCookies();
   const userid = cookies?.userId;
-  console.log(userid);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
