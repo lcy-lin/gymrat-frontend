@@ -65,15 +65,9 @@ const columns = [
 function createData(id, time, tags, description, calories, publicity) {
   calories = -calories;
   time = time.split(' ')[0].replaceAll('-', '/');
-  publicity = publicity === 0 ? '✅' : '❌';
+  publicity = publicity === 1 ? '✅' : '❌';
   return { id, time, tags, description, calories, publicity };
 };
-
-// const rows = [
-//   createData('1', '2021-10-01 12:00:00',['arms', 'chest'], 'new pr 100kg 5 reps', -200, 'true'),
-//   createData('2', '2021-10-02 12:00:00',['legs'], 'new pr 200kg 10 reps', -350, 'false'),
-// ];
-
 
 export default function ActTable({selectedTag, actData}) {
   const rows = actData
