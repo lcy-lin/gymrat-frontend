@@ -1,5 +1,8 @@
 import * as React from 'react';
-import { parseCookies } from "nookies";
+import Router from 'next/router';
+import Link from 'next/link';
+import AlertMessages from '@/utils/alertMessages';
+import { parseCookies, destroyCookie } from "nookies";
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
@@ -10,7 +13,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-import Link from 'next/link';
+
 
 export default function AccountMenu() {
   const cookies = parseCookies();
@@ -23,6 +26,15 @@ export default function AccountMenu() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  function clearCookies() {
+    destroyCookie(null, 'accessToken');
+    destroyCookie(null, 'userId');
+  };
+
+  const handleLogOut = () => {
+    setAnchorEl(null);
+    AlertMessages.confirm("Are you sure you want to log out?", Router, clearCookies);
   };
   return (
     <React.Fragment>
@@ -91,7 +103,7 @@ export default function AccountMenu() {
             </MenuItem>
         </Link>
         
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleLogOut}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
