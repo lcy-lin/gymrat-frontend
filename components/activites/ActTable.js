@@ -8,7 +8,11 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TagBadge from '../TagBadge';
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import RowDialog from './RowDialog';
 
 const darkTheme = createTheme({
   palette: {
@@ -106,7 +110,38 @@ export default function ActTable({selectedTag, actData}) {
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [rowData, setRowData] = React.useState(null);
+  const [selectedRow, setSelectedRow] = React.useState(null);
 
+  const handleClickOpen = async (row) => {
+    await setSelectedRow(row);
+    await setRowData(row);
+    // await setEntryID(row.id);
+    setOpenDialog(true);
+    // trigger({ token }).then(async (data) => {
+    //   const response = data[0];
+    //   const responseData = await data[1];
+    //   if (response.status === 200) {
+    //     setEntryDetailData(responseData.data.entry);
+    //   }
+    // });
+  };
+  const handleClickDelete = () => {
+    // triggerDelete({ token }).then(async (response) => {
+    //   if (response.status === 200) {
+    //     swal("Success", `成功刪除分錄`, "success").then(() => {
+    //       window.location.reload();
+    //     });
+    //   } else {
+    //     swal("Error", `刪除分錄失敗`, "error");
+    //   }
+    // });
+  };
+  const handleClose = async () => {
+    setOpenDialog(false);
+    // await setEntryDetailData(null);
+  };
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -158,8 +193,14 @@ export default function ActTable({selectedTag, actData}) {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => {
                     return (
-                      <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.id}
+                        onClick={() => handleClickOpen(row)}>
                         {columns.map((column) => {
+                          
                           const value = row[column.id];
                           return (
                             <TableCell key={column.id} align={column.align}>
@@ -173,6 +214,7 @@ export default function ActTable({selectedTag, actData}) {
                     );
                   })}
               </TableBody>
+              <RowDialog rowData={rowData} openDialog={openDialog} handleClose={handleClose}/>
             </Table>
           </TableContainer>
           <TablePagination

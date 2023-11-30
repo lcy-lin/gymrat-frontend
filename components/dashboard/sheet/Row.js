@@ -4,17 +4,31 @@ export default function Row({num, data, index, onInputChange}) {
 
     const [numOfSets, setNumOfSets] = useState(3);
     const [setBoxData, setSetBoxData] = useState(Array.from({ length: 3 }, () => ({})));
+    // const handleSetBoxDataChange = (setIndex, setData) => {
+    //     const newSetBoxData = [...setBoxData];
+    //     newSetBoxData[setIndex] = setData;
+    //     setSetBoxData(newSetBoxData);
+    //     const newRowData = {
+    //         ...data,
+    //         num_of_sets: numOfSets,
+    //         sets: newSetBoxData,
+    //     };
+    //     onInputChange(index, newRowData);
+    // };
     const handleSetBoxDataChange = (setIndex, setData) => {
         const newSetBoxData = [...setBoxData];
-        newSetBoxData[setIndex] = setData;
+        newSetBoxData[setIndex] = { ...setData, set_num: setIndex + 1 };
         setSetBoxData(newSetBoxData);
+    
         const newRowData = {
-            ...data,
-            num_of_sets: numOfSets,
-            sets: newSetBoxData,
+          ...data,
+          num_of_sets: numOfSets,
+          sets: newSetBoxData,
         };
+    
         onInputChange(index, newRowData);
-    };
+      };
+    
     const handleInputChange = (event) => {
         const { id, value } = event.target;
         const newValue = id === "rep_goal" ? parseInt(value, 10) : value;
