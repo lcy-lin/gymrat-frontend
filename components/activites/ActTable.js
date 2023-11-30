@@ -8,11 +8,12 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TagBadge from '../TagBadge';
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import RowDialog from './RowDialog';
+import Swal from 'sweetalert2';
+import AlertMessages from '@/utils/alertMessages';
+import axios from 'axios';
+import { parseCookies } from 'nookies';
 
 const darkTheme = createTheme({
   palette: {
@@ -69,7 +70,7 @@ const columns = [
 function createData(id, time, tags, description, calories, publicity) {
   calories = -calories;
   time = time.split(' ')[0].replaceAll('-', '/');
-  publicity = publicity === 1 ? '✅' : '❌';
+  publicity = publicity === 1 ? '✅' : '🔒';
   return { id, time, tags, description, calories, publicity };
 };
 
@@ -113,34 +114,58 @@ export default function ActTable({selectedTag, actData}) {
   const [openDialog, setOpenDialog] = React.useState(false);
   const [rowData, setRowData] = React.useState(null);
   const [selectedRow, setSelectedRow] = React.useState(null);
+  const [activityData, setActivityData] = React.useState(null);
+  const cookies = parseCookies();
 
   const handleClickOpen = async (row) => {
     await setSelectedRow(row);
     await setRowData(row);
-    // await setEntryID(row.id);
     setOpenDialog(true);
-    // trigger({ token }).then(async (data) => {
-    //   const response = data[0];
-    //   const responseData = await data[1];
-    //   if (response.status === 200) {
-    //     setEntryDetailData(responseData.data.entry);
-    //   }
-    // });
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/1.0.0/activities/${cookies.userId}/${row.id}`,{
+        headers: {
+          'Authorization': `Bearer ${cookies.accessToken}`
+        },
+      });
+      setActivityData(response.data.activity);
+    }
+    catch (err) {
+      console.log(err);
+    }
   };
-  const handleClickDelete = () => {
-    // triggerDelete({ token }).then(async (response) => {
-    //   if (response.status === 200) {
-    //     swal("Success", `成功刪除分錄`, "success").then(() => {
-    //       window.location.reload();
-    //     });
-    //   } else {
-    //     swal("Error", `刪除分錄失敗`, "error");
-    //   }
-    // });
+  const handleClickDelete = async (id) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to recover this activity!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/1.0.0/activities/${cookies.userId}/${id}`,{
+          headers: {
+            'Authorization': `Bearer ${cookies.accessToken}`
+          },
+        });
+        setActivityData(null);
+        Swal.fire(
+          'Deleted!',
+          'Your activity has been deleted.',
+          'success'
+        ).then(() => {
+          setOpenDialog(false);
+          window.location.reload();
+        });
+        
+      }
+    }).catch((err) => {
+      AlertMessages.error(err);
+    });
   };
   const handleClose = async () => {
     setOpenDialog(false);
-    // await setEntryDetailData(null);
+    setActivityData(null);
   };
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -214,7 +239,16 @@ export default function ActTable({selectedTag, actData}) {
                     );
                   })}
               </TableBody>
-              <RowDialog rowData={rowData} openDialog={openDialog} handleClose={handleClose}/>
+              <RowDialog
+                rowData={rowData}
+                activityData={activityData}
+                openDialog={openDialog}
+                handleClose={handleClose}
+                handleClickDelete={handleClickDelete}
+                preferredTheme={preferredTheme}
+                darkTheme={darkTheme}
+                lightTheme={lightTheme}
+              />
             </Table>
           </TableContainer>
           <TablePagination

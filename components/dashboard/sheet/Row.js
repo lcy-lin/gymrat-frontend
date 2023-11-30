@@ -4,17 +4,6 @@ export default function Row({num, data, index, onInputChange}) {
 
     const [numOfSets, setNumOfSets] = useState(3);
     const [setBoxData, setSetBoxData] = useState(Array.from({ length: 3 }, () => ({})));
-    // const handleSetBoxDataChange = (setIndex, setData) => {
-    //     const newSetBoxData = [...setBoxData];
-    //     newSetBoxData[setIndex] = setData;
-    //     setSetBoxData(newSetBoxData);
-    //     const newRowData = {
-    //         ...data,
-    //         num_of_sets: numOfSets,
-    //         sets: newSetBoxData,
-    //     };
-    //     onInputChange(index, newRowData);
-    // };
     const handleSetBoxDataChange = (setIndex, setData) => {
         const newSetBoxData = [...setBoxData];
         newSetBoxData[setIndex] = { ...setData, set_num: setIndex + 1 };

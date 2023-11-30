@@ -33,7 +33,6 @@ export default function Sheet() {
       publicity: publicity === true ? 1 : 0,
       movements: rowData,
     };
-    console.log(data);
     axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/activities/create`, {
         data: data
       },{
