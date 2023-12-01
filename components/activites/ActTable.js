@@ -115,6 +115,8 @@ export default function ActTable({selectedTag, actData}) {
   const [rowData, setRowData] = React.useState(null);
   const [selectedRow, setSelectedRow] = React.useState(null);
   const [activityData, setActivityData] = React.useState(null);
+  const [updatedActivityData, setUpdatedActivityData] = React.useState(null);
+  const [editMode, setEditMode] = React.useState(false);
   const cookies = parseCookies();
 
   const handleClickOpen = async (row) => {
@@ -128,6 +130,7 @@ export default function ActTable({selectedTag, actData}) {
         },
       });
       setActivityData(response.data.activity);
+      setUpdatedActivityData(response.data.activity);
     }
     catch (err) {
       console.log(err);
@@ -240,11 +243,17 @@ export default function ActTable({selectedTag, actData}) {
                   })}
               </TableBody>
               <RowDialog
+                cookies={cookies}
                 rowData={rowData}
                 activityData={activityData}
+                setActivityData={setActivityData}
+                updatedActivityData={updatedActivityData}
+                setUpdatedActivityData={setUpdatedActivityData}
                 openDialog={openDialog}
                 handleClose={handleClose}
                 handleClickDelete={handleClickDelete}
+                editMode={editMode}
+                setEditMode={setEditMode}
                 preferredTheme={preferredTheme}
                 darkTheme={darkTheme}
                 lightTheme={lightTheme}

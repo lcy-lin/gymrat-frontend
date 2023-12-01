@@ -10,7 +10,7 @@ const options = [
   { value: 'others', label: 'Others' },
 ];
 
-const MultiSelect = ({ setTags }) => {
+const MultiSelect = ({ defaultValue, setTags }) => {
   const handleChange = (selectedOptions) => {
     const selectedValues = selectedOptions.map((option) => option.value);
     setTags(selectedValues);
@@ -21,6 +21,7 @@ const MultiSelect = ({ setTags }) => {
         <Select
             isMulti
             options={options}
+            defaultValue={defaultValue}
             placeholder="Choose tags for this workout"
             className="my-react-select-container"
             classNamePrefix="my-react-select"
