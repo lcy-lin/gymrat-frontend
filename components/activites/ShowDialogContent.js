@@ -2,6 +2,7 @@ import { DialogContent, TextField } from "@mui/material";
 import TagBadge from "../TagBadge";
 import MultiSelect from "../dashboard/Select";
 import { ThemeProvider } from "@mui/material";
+import DetailTable from "./DetailTable";
 export default function ShowDialogContent({activityData, editMode, setEditMode, updatedActivityData, setUpdatedActivityData, preferredTheme, darkTheme, lightTheme}) {
     const shadow = "min-w-16 mb-2 border p-2 rounded-lg dark:border-gray-600 dark:bg-gray-600"
     return(
@@ -55,14 +56,19 @@ export default function ShowDialogContent({activityData, editMode, setEditMode, 
                             <div className="flex gap-2 items-center mb-2 w-full">
                                 <span className="w-fit font-semibold">Description:</span>
                                 {editMode ? (
-                                    <TextField
-                                        value={updatedActivityData.description}
-                                        onChange={(e) => setUpdatedActivityData({ ...updatedActivityData, description: e.target.value })}
-                                        multiline
-                                        fullWidth
-                                        variant="standard"
-                                        size="small"
-                                    />
+                                    <div>
+                                        {updatedActivityData.description.trim() === '' && (
+                                            <p style={{ color: 'red' }}>Please enter a description</p>
+                                        )}
+                                        <TextField
+                                            value={updatedActivityData.description}
+                                            onChange={(e) => setUpdatedActivityData({ ...updatedActivityData, description: e.target.value })}
+                                            multiline
+                                            fullWidth
+                                            variant="standard"
+                                            size="small"
+                                        />
+                                    </div>
                                     ) : (
                                         <p>{activityData.description}</p>
                                     )}
@@ -70,7 +76,16 @@ export default function ShowDialogContent({activityData, editMode, setEditMode, 
                         </div>
                     </div>
                     <h3 className={`${shadow}`}>Movements</h3>
-                    {activityData.movements && activityData.movements.map((movement, index) => (
+                    <DetailTable
+                        movements={activityData.movements}
+                        updatedActivityData={updatedActivityData}
+                        setUpdatedActivityData={setUpdatedActivityData}
+                        editMode={editMode}
+                        preferredTheme={preferredTheme}
+                        lightTheme={lightTheme}
+                        darkTheme={darkTheme}
+                    />
+                    {/* {activityData.movements && activityData.movements.map((movement, index) => (
                         <div key={movement.id} className=" flex flex-row p-2 rounded-xl dark:bg-gray-800 mb-4">
                             <span className="p-2">#{index+1}</span>
                             <div className="w-full">
@@ -156,9 +171,8 @@ export default function ShowDialogContent({activityData, editMode, setEditMode, 
                                         </span> 
                                 </div>
                                 
+                                
                                 <div className="flex flex-row mt-4">
-                                    {/* <div> */}
-                                        {/* <span className={`${shadow}`}>Sets</span> */}
                                         <table className="border border-collapse table-auto">
                                             <thead>
                                                 <tr>
@@ -179,9 +193,10 @@ export default function ShowDialogContent({activityData, editMode, setEditMode, 
                                             </tbody>
                                         </table>
                                     </div>
+                                    
                             </div>
                         </div>
-                    ))}
+                    ))} */}
                 </div>
             )}
         </DialogContent>

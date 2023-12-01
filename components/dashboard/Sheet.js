@@ -18,6 +18,8 @@ export default function Sheet() {
   };
   const deleteMove = () => {
     setNumOfRows((prevNum) => Math.max(prevNum - 1, 1));
+    if (rowData[-1] === undefined)
+      return;
     rowData.pop();
   };
   const handleRowDataChange = (index, data) => {
