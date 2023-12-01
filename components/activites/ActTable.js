@@ -169,6 +169,7 @@ export default function ActTable({selectedTag, actData}) {
   const handleClose = async () => {
     setOpenDialog(false);
     setActivityData(null);
+    setEditMode(false);
   };
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

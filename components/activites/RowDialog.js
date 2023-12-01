@@ -45,6 +45,10 @@ export default function RowDialog({cookies, rowData, activityData, setActivityDa
         AlertMessages.error(err);
       }
     } 
+    const handleCancel = () => {
+      setUpdatedActivityData(activityData);
+      setEditMode(false);
+    }
     return(
       <ThemeProvider theme={preferredTheme === 'dark' ? darkTheme : lightTheme}>
         <Dialog
@@ -72,7 +76,7 @@ export default function RowDialog({cookies, rowData, activityData, setActivityDa
           <div style={{ backgroundColor: preferredTheme === 'dark' ? "rgb(31 41 55)" : "inherit"}}>
             {editMode ? (
               <>
-                <Button onClick={() => setEditMode(!editMode)} variant="contained" color="error" sx={{ margin: "10px", color: "white"}}>Cancel</Button>
+                <Button onClick={handleCancel} variant="contained" color="error" sx={{ margin: "10px", color: "white"}}>Cancel</Button>
                 <Button onClick={() => handleClickUpdate(activityData.id)} variant="contained" sx={{ margin: "10px", color: "white"}}>Update</Button>
               </>
             ) : (

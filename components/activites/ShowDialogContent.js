@@ -56,18 +56,17 @@ export default function ShowDialogContent({activityData, editMode, setEditMode, 
                             <div className="flex gap-2 items-center mb-2 w-full">
                                 <span className="w-fit font-semibold">Description:</span>
                                 {editMode ? (
-                                    <div>
+                                    <div className="w-full">
                                         {updatedActivityData.description.trim() === '' && (
                                             <p style={{ color: 'red' }}>Please enter a description</p>
                                         )}
-                                        <TextField
+                                        <input
+                                            type="text"
+                                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            required
                                             value={updatedActivityData.description}
                                             onChange={(e) => setUpdatedActivityData({ ...updatedActivityData, description: e.target.value })}
-                                            multiline
-                                            fullWidth
-                                            variant="standard"
-                                            size="small"
-                                        />
+                                            />
                                     </div>
                                     ) : (
                                         <p>{activityData.description}</p>
@@ -85,118 +84,6 @@ export default function ShowDialogContent({activityData, editMode, setEditMode, 
                         lightTheme={lightTheme}
                         darkTheme={darkTheme}
                     />
-                    {/* {activityData.movements && activityData.movements.map((movement, index) => (
-                        <div key={movement.id} className=" flex flex-row p-2 rounded-xl dark:bg-gray-800 mb-4">
-                            <span className="p-2">#{index+1}</span>
-                            <div className="w-full">
-                                <div className="flex flex-wrap justify-between mb-2">
-                                    <span className="flex items-center gap-2">
-                                        <span className={`${shadow}`}>Name</span>
-                                        {editMode ? (
-                                            <TextField
-                                                value={updatedActivityData.movements[index].name}
-                                                onChange={(e) => setUpdatedActivityData({ ...updatedActivityData, movements: updatedActivityData.movements.map((m, i) => i === index ? { ...m, name: e.target.value } : m) })}
-                                                multiline
-                                                variant="standard"
-                                                size="small"
-                                                sx={{ width: "8rem"}}
-                                            />
-                                        ) : (
-                                        <p>{movement.name}</p>
-                                        )}
-                                    </span>
-                                    <span className="flex items-center gap-2">
-                                        <span className={`${shadow}`}>Number of Sets</span>
-                                        {editMode ? (
-                                            <TextField
-                                                value={updatedActivityData.movements[index].num_of_sets}
-                                                onChange={(e) => setUpdatedActivityData({ ...updatedActivityData, movements: updatedActivityData.movements.map((m, i) => i === index ? { ...m, num_of_sets: e.target.value } : m)})}
-                                                multiline
-                                                variant="standard"
-                                                size="small"
-                                                sx={{ width: "3rem"}}
-                                            />
-                                        ) : (
-                                            <p>{movement.num_of_sets}</p>
-                                        )}
-                                        
-                                    </span>
-                                    <span className="flex items-center gap-2">
-                                        <span className={`${shadow}`}>Reps Goal</span>
-                                        {editMode ? (
-                                            <TextField
-                                                value={updatedActivityData.movements[index].reps_goal}
-                                                onChange={(e) => setUpdatedActivityData({ ...updatedActivityData, movements: updatedActivityData.movements.map((m, i) => i === index ? { ...m, reps_goal: e.target.value } : m) })}
-                                                multiline
-                                                variant="standard"
-                                                size="small"
-                                                sx={{ width: "3rem"}}
-                                            />
-                                        ) : (
-                                            <p>{movement.reps_goal}</p>
-                                        )}
-                                        
-                                    </span>
-                                    <span className="flex items-center gap-2">
-                                        <span className={`${shadow}`}>Weight</span>
-                                        {editMode ? (
-                                            <TextField
-                                                value={updatedActivityData.movements[index].weight}
-                                                onChange={(e) => setUpdatedActivityData({ ...updatedActivityData, movements: updatedActivityData.movements.map((m, i) => i === index ? { ...m, weight: e.target.value } : m) })}
-                                                multiline
-                                                variant="standard"
-                                                size="small"
-                                                sx={{ width: "5rem"}}
-                                            />
-                                        ) : (
-                                            <p>{movement.weight}</p>
-                                        )} 
-                                        
-                                    </span> 
-                                    <span className="flex items-center gap-2 w-full">
-                                            <span className={`${shadow}`}>Description</span>
-                                            {editMode ? (
-                                                <TextField
-                                                    value={updatedActivityData.movements[index].description}
-                                                    onChange={(e) => setUpdatedActivityData({ ...updatedActivityData, movements: updatedActivityData.movements.map((m, i) => i === index ? { ...m, description: e.target.value } : m) })}
-                                                    multiline
-                                                    variant="standard"
-                                                    size="small"
-                                                    fullWidth
-                                                />
-                                                ) : (
-                                                    <p>{movement.description}</p>
-                                                )} 
-                                            
-                                        </span> 
-                                </div>
-                                
-                                
-                                <div className="flex flex-row mt-4">
-                                        <table className="border border-collapse table-auto">
-                                            <thead>
-                                                <tr>
-                                                    <th className="p-2 border border-gray-300 bg-gray-600">Set #</th>
-                                                    <th className="p-2 border border-gray-300 bg-gray-600">Reps Done</th>
-                                                    <th className="p-2 border border-gray-300 bg-gray-600">Strength Left</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            {movement.sets &&
-                                                movement.sets.sort((a, b) => a.set_num - b.set_num).map((set) => (
-                                                <tr key={set.set_num}>
-                                                    <td className="border border-gray-300 p-2 ">{set.set_num}</td>
-                                                    <td className="border border-gray-300 p-2 ">{set.reps_achieved}</td>
-                                                    <td className="border border-gray-300 p-2">{set.str_left}</td>
-                                                </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    
-                            </div>
-                        </div>
-                    ))} */}
                 </div>
             )}
         </DialogContent>
