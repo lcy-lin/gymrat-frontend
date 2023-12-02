@@ -113,14 +113,12 @@ export default function ActTable({selectedTag, actData}) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [rowData, setRowData] = React.useState(null);
-  const [selectedRow, setSelectedRow] = React.useState(null);
   const [activityData, setActivityData] = React.useState(null);
   const [updatedActivityData, setUpdatedActivityData] = React.useState(null);
   const [editMode, setEditMode] = React.useState(false);
   const cookies = parseCookies();
 
   const handleClickOpen = async (row) => {
-    await setSelectedRow(row);
     await setRowData(row);
     setOpenDialog(true);
     try {
