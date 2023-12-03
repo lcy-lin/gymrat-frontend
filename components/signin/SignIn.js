@@ -29,7 +29,7 @@ export default function SignIn() {
                 });
                 router.push('/dashboard');
             }).catch((err) => {
-                AlertMessages.error(err.response.data.error);
+                AlertMessages.error(err.response?.data?.error);
             });
     }
     return (

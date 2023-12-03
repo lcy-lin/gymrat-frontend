@@ -14,7 +14,9 @@ export default function DashBoard() {
                 <div className="self-center">
                     <Title setRecords={setRecords}/>
                 </div>
-                {records === 'weight' && <Weight />}
+                <div className="self-center">
+                    {records === 'weight' && <Weight />}
+                </div>
                 {records === 'activity' && <Sheet />}
                 {records === 'meal' && <Meal />}
             </div>
