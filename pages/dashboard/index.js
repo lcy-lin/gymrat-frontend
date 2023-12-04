@@ -18,7 +18,10 @@ export default function DashBoard() {
                     {records === 'weight' && <Weight />}
                 </div>
                 {records === 'activity' && <Sheet />}
-                {records === 'meal' && <Meal />}
+                <div className="w-1/2 self-center">
+                    {records === 'meal' && <Meal />}
+                </div>
+                
             </div>
         </div>
     );
