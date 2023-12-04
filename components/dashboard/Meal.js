@@ -11,8 +11,10 @@ export default function Meal() {
     const cookies = parseCookies();
     const [selectedType, setSelectedType] = useState(null);
     const [date, setDate] = useState(new Date());
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = (e) => {
+        setLoading(true);
         e.preventDefault();
         const dateString = getDateString(date);
         const data = {
@@ -26,7 +28,7 @@ export default function Meal() {
                 Authorization: `Bearer ${cookies.accessToken}`
             }})
             .then(res => {
-                console.log(res.data);
+                setLoading(false); 
                 AlertMessages.success("Meal added!");
             })
             .catch(err => {
@@ -63,7 +65,12 @@ export default function Meal() {
                     </select>
 
                 </span>
-                <button type="submit" className=" self-center w-fit rounded-xl bg-blue-500 text-white font-semibold p-2">Submit</button>
+                <button
+                    disabled={loading}
+                    type="submit"
+                    className="self-center w-fit rounded-xl bg-blue-500 text-white font-semibold p-2">
+                    {loading ? "Submitting...": "Submit"}
+                </button>
             </form>
             
         </div>
