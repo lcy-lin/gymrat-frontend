@@ -1,5 +1,6 @@
 import DateComponent from "./DatePicker";
 import AlertMessages from "@/utils/alertMessages";
+import getDateString from "@/utils/getDateString";
 import { useRef, useState } from "react";
 import axios from "axios";
 import { parseCookies } from "nookies";
@@ -13,14 +14,12 @@ export default function Meal() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const year = date.getFullYear();
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const day = date.getDate().toString().padStart(2, '0');
+        const dateString = getDateString(date);
         const data = {
             user_id: cookies.userId,
             description: mealRef.current.value,
             meal_type: selectedType,
-            date: `${year}-${month}-${day}`
+            date: dateString
         };
         axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/1.0.0/cals/create`, {data}, {
             headers: {
