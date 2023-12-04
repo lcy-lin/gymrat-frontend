@@ -10,6 +10,8 @@ import ActCard from "@/components/userpage/ActCard";
 import ChartBar from "@/components/userpage/ChartBar";
 import BasicLineChart from "@/components/userpage/LineChart";
 import Timeline from "@/components/userpage/Timeline";
+import { CookieOutlined } from "@mui/icons-material";
+import Swal from "sweetalert2";
 export default function Userpage() {
     const cookies = parseCookies();
     const [userData, setUserData] = useState(null);
@@ -23,7 +25,6 @@ export default function Userpage() {
             },
         }).then((res) => {
             setUserData(res.data.data.user);
-            console.log(res);
         }).catch((err) => {
             console.log(err);
         });
@@ -57,7 +58,7 @@ export default function Userpage() {
         },
     ];
     return (
-        <div className="flex flex-col bg-white dark:bg-gray-800 ">
+        <div className="flex flex-col min-h-screen bg-white dark:bg-gray-800 ">
             <Header />
             <div className="flex flex-row justify-center gap-4 py-6">
                 <div className="flex flex-col gap-2">
@@ -65,7 +66,7 @@ export default function Userpage() {
                     {/* <OrgCard orgs={userData?.organizations}/> */}
                 </div>
                 <div>
-                    <div className="flex items-center">
+                    {/* <div className="flex items-center">
                         {mockData?.slice(0,4).map((item, index) => (
                             <ActCard userid={userid} data={item} key={item.id}>{item.part}</ActCard>
                         ))}
@@ -75,10 +76,10 @@ export default function Userpage() {
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
                             </svg>
                         </button>
-                    </div>
+                    </div> */}
                     <div className="flex mb-4">
                         <ChartBar />
-                        <BasicLineChart />
+                        <BasicLineChart cookies={cookies}/>
                     </div>
                     <Timeline />
                 </div>
