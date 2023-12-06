@@ -22,6 +22,7 @@
     "@tailwindcss/forms": "^0.5.7",
     "axios": "^1.6.2",
     "contribution-heatmap": "^1.4.1",
+    "date-fns": "^2.30.0",
     "dayjs": "^1.11.10",
     "flowbite-datepicker": "^1.2.4",
     "framer-motion": "^10.16.5",

@@ -5,20 +5,27 @@ import { parseCookies } from "nookies";
 // import NavBar from "@/components/NavBar";
 import Header from "@/components/Header";
 import Avatar from "@/components/userpage/Avatar";
-import OrgCard from "@/components/userpage/OrgCard";
-import ActCard from "@/components/userpage/ActCard";
+// import OrgCard from "@/components/userpage/OrgCard";
+// import ActCard from "@/components/userpage/ActCard";
 import ChartBar from "@/components/userpage/ChartBar";
 import BasicLineChart from "@/components/userpage/LineChart";
-import Timeline from "@/components/userpage/Timeline";
-import { CookieOutlined } from "@mui/icons-material";
+// import Timeline from "@/components/userpage/Timeline";
+// import { CookieOutlined } from "@mui/icons-material";
+import SetUp from "@/components/userpage/SetUp";
 import Swal from "sweetalert2";
+
 export default function Userpage() {
     const cookies = parseCookies();
     const [userData, setUserData] = useState(null);
     const router = useRouter()
     const query = router.query
     const userid = query?.userid;
+    const [isUserPage, setIsUserPage] = useState(null);
     useEffect(() => {
+        if (!cookies.accessToken || !userid || !cookies.userId) {
+            return;
+        }
+        setIsUserPage(cookies.userId === userid);
         axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/${userid}/profile`,{
             headers: {
                 Authorization: `Bearer ${cookies.accessToken}`,
@@ -28,7 +35,7 @@ export default function Userpage() {
         }).catch((err) => {
             console.log(err);
         });
-    }, [cookies.accessToken, userid]);
+    }, [cookies.accessToken, cookies.userId, userid]);
     
 
     const mockData = [
@@ -77,11 +84,13 @@ export default function Userpage() {
                             </svg>
                         </button>
                     </div> */}
+                    
                     <div className="flex mb-4">
-                        <ChartBar />
-                        <BasicLineChart cookies={cookies}/>
+                        <ChartBar cookies={cookies} userid={userid} />
+                        <BasicLineChart cookies={cookies} userid={userid} isUserPage={isUserPage} />
                     </div>
-                    <Timeline />
+                    <SetUp userid={userid} isUserPage={isUserPage}/>
+                    {/* <Timeline /> */}
                 </div>
             </div>
         </div>

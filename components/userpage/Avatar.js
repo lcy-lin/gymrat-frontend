@@ -2,7 +2,7 @@ import Image from "next/image";
 import Chip from '@mui/material/Chip';
 export default function Avatar({data}) {
     return (
-        <div className="flex flex-col items-center gap-4 bg-white border dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7] w-fit p-6 rounded-xl">
+        <div className="mt-2 flex flex-col items-center gap-4 bg-white border dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] w-fit p-6 rounded-xl">
             <Image className="w-20 h-20 rounded-full" src="/girl.jpg" alt="user avatar" width={300} height={300}/>
             <div className="flex flex-col items-center font-medium dark:text-white">
                 <div className="flex flex-row">
@@ -19,7 +19,7 @@ export default function Avatar({data}) {
                     
                 </div>
                 
-                <div className="text-m text-gray-500 dark:text-gray-400">Joined in {data?.created_at.split(' ')[0]}</div>
+                <div className="text-m text-gray-500 dark:text-gray-400 mb-2">Joined in {data?.created_at.split(' ')[0]}</div>
                 <div className="flex flex-row gap-1">
                     {data?.role.map((item) => (
                         <Chip key={item.id} label={`${item}`} color="primary" />
