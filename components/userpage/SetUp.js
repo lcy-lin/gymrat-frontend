@@ -2,17 +2,22 @@ import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { parseCookies } from "nookies";
 import EditIcon from '@mui/icons-material/Edit';
+import AlertMessages from "@/utils/alertMessages";
+import Swal from "sweetalert2";
 
 export default function SetUp(props) {
     const [bodyData, setBodyData] = useState(null);
     const [edit, setEdit] = useState(false);
-    const [selectedSex, setSelectedSex] = useState(null);
-    const [selectedAct, setSelectedAct] = useState(null);
+    const [needWeight, setNeedWeight] = useState(false);
+    const [getData, setGetData] = useState(false);
+    const [selectedSex, setSelectedSex] = useState("male");
+    const [selectedAct, setSelectedAct] = useState(0);
     const cookies = parseCookies();
     const heightRef = useRef(null);
     const ageRef = useRef(null);
     const actFactor = ['sedentary (little to no exercise + work a desk job)', 'lightly active (light exercise 1-3 days / week)', 'moderately active (exercise 3-5 days / week) ', 'very active (heavy exercise 6-7 days / week)', 'extra active  (very heavy exercis, training 2x / day) '];
     const { userid, isUserPage } = props;
+    
     useEffect(() => {
         if (!cookies.accessToken || !userid) {
             return;
@@ -25,8 +30,13 @@ export default function SetUp(props) {
             setBodyData(res.data.data);
         }).catch((err) => {
             console.log(err);
+            const error = err.response.data.error;
+            if (error === "Weight data not found") {
+                setNeedWeight(true);
+            }
+            setBodyData(null);
         });
-    }, [cookies.accessToken, userid]);
+    }, [cookies.accessToken, userid, getData]);
 
     useEffect(() => {
         if (bodyData) {
@@ -40,29 +50,58 @@ export default function SetUp(props) {
     }
     const handleSaveClick = () => {
         setEdit(false);
-        axios.put(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/1.0.0/bodies/${cookies.userId}`,
-            {
-                data: {
-                    height: heightRef.current.value,
-                    weight: bodyData.weight,
-                    age: ageRef.current.value,
-                    sex: selectedSex,
-                    act_level: selectedAct,
+        if (bodyData) {
+            axios.put(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/1.0.0/bodies/${cookies.userId}`,
+                {
+                    data: {
+                        height: heightRef.current.value,
+                        weight: bodyData.weight,
+                        age: ageRef.current.value,
+                        sex: selectedSex,
+                        act_level: selectedAct,
+                    },
                 },
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${cookies.accessToken}`,
-                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${cookies.accessToken}`,
+                    },
+                }).then((res) => {
+                    setBodyData(res.data.data);
+                }).catch((err) => {
+                    console.log(err);
+                });
+        } else {
+            if (needWeight) {
+                return;
             }
-        )
+            axios.post(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/1.0.0/bodies/${cookies.userId}`,
+                {
+                    data: {
+                        height: heightRef.current.value,
+                        age: ageRef.current.value,
+                        sex: selectedSex,
+                        act_level: selectedAct,
+                    },
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${cookies.accessToken}`,
+                    },
+                }
+            )
             .then((res) => {
-                setBodyData(res.data.data);
+                AlertMessages.success("Body data set up successfully")
+                setGetData(!getData);
             })
             .catch((err) => {
+                AlertMessages.error(err);
                 console.log(err);
             });
+        }
+        
+            
     };
     
     return (
@@ -72,7 +111,7 @@ export default function SetUp(props) {
                {isUserPage && !edit && (
                 <EditIcon className="text-gray-400 hover:text-gray-600 cursor-pointer" onClick={handleEditClick}/> )
                 }
-                
+                {needWeight && edit && <p className="ml-2 text-red-500">Please set up your weight in /dashboard first</p>}
             </span>
             
             <div className="grid grid-cols-4 gap-4">
@@ -90,6 +129,7 @@ export default function SetUp(props) {
                 <div className="flex flex-row mb-2 items-center">
                     <p className="font-semibold">Latest Weight:</p>
                     <p className="ml-2">{bodyData?.weight} kg</p>
+                    
                 </div>
                 <div className="flex flex-row mb-2 items-center">
                     <p className="font-semibold">Age:</p>
@@ -154,6 +194,7 @@ export default function SetUp(props) {
                             className="text-white w-20 p-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                             type="button"
                             onClick={handleSaveClick}
+                            disabled={needWeight}
                         >
                             Save
                         </button>
