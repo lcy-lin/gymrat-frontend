@@ -40,9 +40,10 @@ export default function ChartBar(props) {
       };
     }, []);
   useEffect(() => {
-    if(!cookies.accessToken || !userid) {
+    if(!cookies.accessToken || !userid || !year) {
       return;
     }
+    
     axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/1.0.0/activities/records/${userid}?year=${year}`, {
       headers: {
         Authorization: `Bearer ${cookies.accessToken}`,

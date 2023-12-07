@@ -10,7 +10,6 @@ export default function SetUp(props) {
     const [selectedAct, setSelectedAct] = useState(null);
     const cookies = parseCookies();
     const heightRef = useRef(null);
-    const weightRef = useRef(null);
     const ageRef = useRef(null);
     const actFactor = ['sedentary (little to no exercise + work a desk job)', 'lightly active (light exercise 1-3 days / week)', 'moderately active (exercise 3-5 days / week) ', 'very active (heavy exercise 6-7 days / week)', 'extra active  (very heavy exercis, training 2x / day) '];
     const { userid, isUserPage } = props;
@@ -46,7 +45,7 @@ export default function SetUp(props) {
             {
                 data: {
                     height: heightRef.current.value,
-                    weight: weightRef.current.value,
+                    weight: bodyData.weight,
                     age: ageRef.current.value,
                     sex: selectedSex,
                     act_level: selectedAct,
@@ -83,7 +82,7 @@ export default function SetUp(props) {
                         ? <input
                             ref={heightRef}
                             className="border-gray-600 rounded-md ml-2 w-20 h-9 dark:bg-gray-700"
-                            type="text"
+                            type="number"
                             defaultValue={bodyData?.height}
                         />
                         : <p className="ml-2">{bodyData?.height} cm</p>}
