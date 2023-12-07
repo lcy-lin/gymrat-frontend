@@ -20,7 +20,7 @@ export default function Avatar({data}) {
                 </div>
                 
                 <div className="text-m text-gray-500 dark:text-gray-400 mb-2">Joined in {data?.created_at.split(' ')[0]}</div>
-                <div className="flex flex-row gap-1">
+                <div className="grid grid-cols-2 gap-1">
                     {data?.role.map((item) => (
                         <Chip key={item.id} label={`${item}`} color="primary" />
                     ))}

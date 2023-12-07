@@ -1,20 +1,33 @@
 import axios from "axios";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import AlertMessages from "@/utils/alertMessages";
 
 export default function SignUp() {
     const router = useRouter();
-    const [email, setEmail] = useState("");
-    const [name, setName] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    const emailRef = useRef(null);
+    const nameRef = useRef(null);
+    const passwordRef = useRef(null);
+    const confirmPasswordRef = useRef(null);
+    const [isStudent, setIsStudent] = useState(false);
+    const [isCoach, setIsCoach] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(confirmPassword !== password) {
+        const email = emailRef.current.value;
+        const name = nameRef.current.value;
+        const password = passwordRef.current.value;
+        const confirmPassword = confirmPasswordRef.current.value;
+        let roles = [2];
+        if (isCoach) {
+            roles.push(3);
+        };
+        if (isStudent) {
+            roles.push(4);
+        };
+        if(password !== confirmPassword) {
             AlertMessages.error("Passwords do not match");
             return;
         };
@@ -23,7 +36,7 @@ export default function SignUp() {
             return;
         };
         axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/signup`, {
-                email, name, password
+                email, name, password, roles
                 },{
                     headers: {
                     "Content-Type": "application/json",
@@ -43,19 +56,45 @@ export default function SignUp() {
                 </span>
                 <div>
                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                    <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)} name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="name@company.com" required />
+                    <input type="email" ref={emailRef} name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="name@company.com" required />
                 </div>
                 <div>
                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your user name</label>
-                    <input type="text" value={name} onChange={(e)=>setName(e.target.value)} name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Frank" required />
+                    <input type="text" ref={nameRef} name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Frank" required />
                 </div>
                 <div>
                     <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-                    <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                    <input type="password" ref={passwordRef} name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
                 </div>
                 <div>
                     <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
-                    <input type="password" value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)} name="confirmPassword" id="confirmPassword" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                    <input type="password" ref={confirmPasswordRef} name="confirmPassword" id="confirmPassword" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                </div>
+                <div className="flex flex-row justify-between">
+                    <div className="flex items-center">
+                        <input
+                            id="isStudent"
+                            type="checkbox"
+                            checked={isStudent}
+                            onChange={() => setIsStudent(!isStudent)}
+                            className="mr-2 rounded-md"
+                        />
+                        <label htmlFor="isStudent" className="text-sm font-medium text-gray-900 dark:text-white">
+                            I am a student
+                        </label>
+                    </div>
+                    <div className="flex items-center">
+                        <input
+                            id="isCoach"
+                            type="checkbox"
+                            checked={isCoach}
+                            onChange={() => setIsCoach(!isCoach)}
+                            className="mr-2 rounded-md"
+                        />
+                        <label htmlFor="isCoach" className="text-sm font-medium text-gray-900 dark:text-white">
+                            I am a coach
+                        </label>
+                    </div>
                 </div>
                 <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create a new account</button>
                 <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
