@@ -19,6 +19,7 @@ export default function SetUp(props) {
     const { userid, isUserPage } = props;
     
     useEffect(() => {
+        setBodyData(null);
         if (!cookies.accessToken || !userid) {
             return;
         };
