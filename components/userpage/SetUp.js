@@ -14,6 +14,7 @@ export default function SetUp(props) {
     const actFactor = ['sedentary (little to no exercise + work a desk job)', 'lightly active (light exercise 1-3 days / week)', 'moderately active (exercise 3-5 days / week) ', 'very active (heavy exercise 6-7 days / week)', 'extra active  (very heavy exercis, training 2x / day) '];
     const { userid, isUserPage } = props;
     useEffect(() => {
+        setBodyData(null);
         if (!cookies.accessToken || !userid) {
             return;
         };

@@ -13,6 +13,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import Image from 'next/image';
 
 
 export default function AccountMenu() {
@@ -48,7 +49,7 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+            <Image src="/avatar.png" height={50} width={50} alt="coach avatar"className="rounded-full"/>
           </IconButton>
         </Tooltip>
       </Box>

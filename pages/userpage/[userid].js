@@ -7,8 +7,10 @@ import Header from "@/components/Header";
 import Avatar from "@/components/userpage/Avatar";
 // import OrgCard from "@/components/userpage/OrgCard";
 // import ActCard from "@/components/userpage/ActCard";
+import CoachCard from "@/components/userpage/CoachCard";
 import ChartBar from "@/components/userpage/ChartBar";
 import BasicLineChart from "@/components/userpage/LineChart";
+import CoachBar from "@/components/userpage/CoachBar";
 // import Timeline from "@/components/userpage/Timeline";
 // import { CookieOutlined } from "@mui/icons-material";
 import SetUp from "@/components/userpage/SetUp";
@@ -70,6 +72,13 @@ export default function Userpage() {
             <div className="flex flex-row justify-center gap-4 py-6">
                 <div className="flex flex-col gap-2">
                     <Avatar data={userData} />
+                    {userData?.coach_id ? (
+                        <CoachBar cookies={cookies} coach_id={userData.coach_id} />
+                    ): (
+                        isUserPage && <CoachCard cookies={cookies} setUserData={setUserData} />
+                    )}
+                    
+                    
                     {/* <OrgCard orgs={userData?.organizations}/> */}
                 </div>
                 <div>
