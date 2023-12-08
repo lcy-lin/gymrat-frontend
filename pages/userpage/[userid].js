@@ -19,6 +19,7 @@ import Swal from "sweetalert2";
 export default function Userpage() {
     const cookies = parseCookies();
     const [userData, setUserData] = useState(null);
+    // const [editCoach, setEditCoach] = useState(false);
     const router = useRouter()
     const query = router.query
     const userid = query?.userid;
@@ -71,7 +72,7 @@ export default function Userpage() {
             <Header />
             <div className="flex flex-row justify-center gap-4 py-6">
                 <div className="flex flex-col gap-2">
-                    <Avatar data={userData} />
+                    <Avatar data={userData} setUserData={setUserData} cookies={cookies}/>
                     {userData?.coach_id ? (
                         <CoachBar cookies={cookies} coach_id={userData.coach_id} />
                     ): (

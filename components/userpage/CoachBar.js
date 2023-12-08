@@ -10,7 +10,6 @@ export default function CoachBar(props) {
         if (!cookies.accessToken || !coach_id || !cookies.userId) {
             return;
         }
-        console.log(coach_id);
         axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/${coach_id}/profile`,{
             headers: {
                 Authorization: `Bearer ${cookies.accessToken}`,

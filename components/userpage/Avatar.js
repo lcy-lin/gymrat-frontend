@@ -1,6 +1,10 @@
+import { useState } from "react";
 import Image from "next/image";
 import Chip from '@mui/material/Chip';
-export default function Avatar({data}) {
+import EditRole from "./EditRole";
+
+export default function Avatar({cookies, data, setUserData}) {
+    const [edit, setEdit] = useState(false);
     return (
         <div className="mt-2 flex flex-col items-center gap-4 bg-white border dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] w-fit p-6 rounded-xl">
             <Image className="w-20 h-20 border rounded-full" src="/avatar.png" alt="user avatar" width={300} height={300}/>
@@ -19,11 +23,20 @@ export default function Avatar({data}) {
                     
                 </div>
                 <div className="text-m text-gray-500 dark:text-gray-400 mb-2">Joined in {data?.created_at.split(' ')[0]}</div>
-                <div className="grid grid-cols-2 gap-1">
-                    {data?.role.map((item) => (
-                        <Chip key={item.id} label={`${item}`} color="primary" />
-                    ))}
-                </div>
+                { data && edit 
+                    ? (<EditRole roles={data.role} edit={edit} setEdit={setEdit} setUserData={setUserData} cookies={cookies} />)
+                    : (
+                        <>
+                            <div className="grid grid-cols-2 gap-1 mb-2">
+                                {data?.role
+                                    .filter((item) => item !== 'user')
+                                    .map((filteredItem) => (
+                                        <Chip key={filteredItem.id} label={`${filteredItem}`} color="primary" />
+                                    ))}
+                            </div>
+                            <button className="px-4 py-2 font-md rounded-lg bg-gray-700 text-white" onClick={() => setEdit(true)}>Edit</button>
+                        </>
+                        )}
             </div>
         </div>
     );

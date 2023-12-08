@@ -67,7 +67,7 @@ export default function CoachCard(props) {
     return (
         <div className="bg-gray-800 border dark:border-gray-700 rounded-lg p-2 dark:text-white flex flex-col items-center">
             <span className="flex flex-row justify-between mb-2">
-                <h1 className="font-bold">Set up your coach</h1>
+                <h1 className="font-bold">Update your coach</h1>
                 {!edit && <EditIcon onClick={() => {setEdit(true)}} />}
             </span>
             {edit && 
