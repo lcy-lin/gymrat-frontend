@@ -189,7 +189,7 @@ const Row = memo(function Row(props) {
                         {editMode ? (
                           <input
                                 type="text"
-                                className="self-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required
                                 value={updatedActivityData.movements[idx].sets[index]?.reps_achieved}
                                 onChange={(e) => setUpdatedActivityData({ ...updatedActivityData, movements: updatedActivityData.movements.map((m, i) => i === idx ? { ...m, sets: updatedActivityData.movements[idx].sets.map((s, j) => j === index ? { ...s, reps_achieved: e.target.value } : s) } : m) })}
@@ -203,7 +203,7 @@ const Row = memo(function Row(props) {
                           <input
                           type="text"
                           id="first_name"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           required
                           value={updatedActivityData.movements[idx].sets[index]?.str_left}
                           onChange={(e) => setUpdatedActivityData({ ...updatedActivityData, movements: updatedActivityData.movements.map((m, i) => i === idx ? { ...m, sets: updatedActivityData.movements[idx].sets.map((s, j) => j === index ? { ...s, str_left: e.target.value } : s) } : m) })}

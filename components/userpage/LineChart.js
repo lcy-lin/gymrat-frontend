@@ -106,7 +106,7 @@ export default function BasicLineChart(props) {
     },[cookies.accessToken, userid, cookies.userId, date]);
   return (
     <ThemeProvider theme={preferredTheme === 'dark' ? darkTheme : lightTheme}>
-      <div className="flex flex-col items-start border dark:border-gray-600 dark:bg-gray-800 m-2 rounded-lg">
+      <div className="flex flex-col items-start border dark:border-gray-600 dark:bg-gray-800 rounded-lg">
         <div className="flex items-center mt-4 ml-4 ">
           <h1 className="text-black dark:text-white text-2xl font-semibold">Daily Weight Records</h1>
           {isUserPage && <EditIcon

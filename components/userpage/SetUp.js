@@ -67,7 +67,7 @@ export default function SetUp(props) {
     };
     
     return (
-        <div className="border p-4 m-2 rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:text-white">
+        <div className="border p-4 rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:text-white">
             <span className="flex flex-row gap-2 mb-4">
                <h1 className="text-2xl font-semibold ">Basic Information</h1>
                {isUserPage && !edit && (

@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import roleIdConverter from "@/utils/roleIdConverter";
 
 export default function EditRole(props) {
-    const {roles, edit, setEdit, setUserData, cookies} = props;
+    const {roles, setEdit, setUserData, cookies} = props;
     const [coach, setCoach] = useState(false);
     const [student, setStudent] = useState(false);
     const handleSave = () => {
@@ -42,7 +42,6 @@ export default function EditRole(props) {
     }
     return (
         <div className="flex flex-col items-center">
-            <p className="font-semibold text-xl">Edit Role</p>
             <p className="font-semibold">Current Role</p>
             <div className="flex flex-col gap-2 items-center">
                 {roles

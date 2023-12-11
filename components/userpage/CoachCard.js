@@ -81,28 +81,16 @@ export default function CoachCard(props) {
                     />
                     <div className="z-10">
                         {coachData && coachData?.map((item, index) => (
-                            <div onClick={handleSelect(item.id, item.name)} key={item.id} className="flex flex-row items-center bg-gray-700 rounded-xl p-2 w-44">
-                                <Image src="/avatar.png" height={50} width={50} alt="coach avatar"className="rounded-full"/>
+                            <div onClick={handleSelect(item.id, item.name)} key={item.id} className="flex flex-row items-center gap-2 bg-gray-700 rounded-xl p-2 w-44">
+                                {
+                                    item.picture 
+                                        ? <Image src={`${process.env.NEXT_PUBLIC_S3_URL}/${item.picture}`} height={50} width={50} alt="coach avatar"className="w-50 h-50 rounded-full"/>
+                                        : <Image src="/avatar.png" height={50} width={50} alt="coach avatar"className="rounded-full"/>
+                                }
                                 <span>{item.name}</span>
                             </div>
                         ))}
                     </div>
-                    {/* {selectedCoach ? (
-                        <div className="flex flex-row items-center bg-gray-700 rounded-xl p-2 w-44">
-                            <Image src="/avatar.png" height={50} width={50} alt="coach avatar" className="rounded-full" />
-                            <span>{selectedCoach.name}</span>
-                        </div>
-                    ) : (
-                        <div className="z-10">
-                            {coachData && coachData?.map((item, index) => (
-                                <div key={item.id} className="flex flex-row items-center bg-gray-700 rounded-xl p-2 w-44" onClick={handleSelect(item.id, item.name)}>
-                                    <Image src="/avatar.png" height={50} width={50} alt="coach avatar" className="rounded-full" />
-                                    <span>{item.name}</span>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                     */}
                     <div className="self-center flex gap-2">
                         <button onClick={handleSave} className="bg-blue-500 w-20 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl">
                             Save

@@ -1,8 +1,23 @@
 import Link from 'next/link';
 import AccountMenu from './AccountMenu';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { parseCookies } from 'nookies';
 
 export default function Header() {
-
+  const cookies = parseCookies();
+  const [userPic, setUserPic] = useState(null);
+  useEffect(() => {
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/${cookies.userId}/profile`,{
+      headers: {
+        Authorization: `Bearer ${cookies.accessToken}`,
+      },
+    }).then((res) => {
+      setUserPic(res.data.data.user.picture);
+    }).catch((err) => {
+      console.log(err);
+    });
+  });
   return (
     <header className="bg-gray-200 dark:bg-gray-900">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
@@ -23,7 +38,7 @@ export default function Header() {
           </Link>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <AccountMenu />
+            <AccountMenu userPic={userPic}/>
         </div>
       </nav>
     </header>

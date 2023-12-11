@@ -57,7 +57,7 @@ export default function ChartBar(props) {
   }, [cookies.accessToken, userid, year]);
   return (
     <ThemeProvider theme={preferredTheme === 'dark' ? darkTheme : lightTheme}>
-      <div className="flex flex-col items-start border dark:border-gray-600 dark:bg-gray-800 m-2 rounded-lg">
+      <div className="flex flex-col items-start border dark:border-gray-600 dark:bg-gray-800 rounded-lg">
         <h1 className="text-black dark:text-white text-2xl font-semibold ml-4 mt-4">Activity Records</h1>
         <input
           type="number"

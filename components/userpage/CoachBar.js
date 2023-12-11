@@ -21,21 +21,23 @@ export default function CoachBar(props) {
         });
     }, [coach_id, cookies.accessToken, cookies.userId]);
     return (
-        <div className="flex flex-col border rounded-lg dark:text-white dark:border-gray-700 dark:bg-gray-800 p-4">
-            <p className="font-semibold mb-2 ">My Coach</p>
-            {coachData && (
-                <Link href={`/userpage/${coachData?.id}`}>
-                    <div className="flex flex-row items-center gap-2 ">
-                        {coachData?.picture ? (
-                            <Image src={`${coachData.picture}`} height={50} width={50} alt="coach avatar"className="rounded-full border"/>
-                        ) : (
-                            <Image src="/avatar.png" height={50} width={50} alt="coach avatar"className="rounded-full border"/>
-                        
-                        )}
-                        <p>{coachData.name}</p>
-                    </div>
-                </Link>
-                )}
+        <div className="flex flex-col border rounded-lg dark:text-white dark:border-gray-700 dark:bg-gray-800">
+            <p className="flex justify-center font-semibold mb-2 dark:bg-gray-700 rounded-t-lg p-2">My Coach</p>
+            <div className="pl-2 pb-2 pr-1">
+                {coachData && (
+                    <Link href={`/userpage/${coachData?.id}`}>
+                        <div className="flex flex-row items-center gap-2 ">
+                            {coachData?.picture ? (
+                                <Image src={`${coachData.picture}`} height={50} width={50} alt="coach avatar"className="rounded-full border dark:border-gray-700"/>
+                            ) : (
+                                <Image src="/avatar.png" height={50} width={50} alt="coach avatar"className="rounded-full border dark:border-gray-700"/>
+                            
+                            )}
+                            <p>{coachData.name}</p>
+                        </div>
+                    </Link>
+                    )}
+            </div>
         </div>
     );
 }

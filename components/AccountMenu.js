@@ -16,9 +16,10 @@ import Logout from '@mui/icons-material/Logout';
 import Image from 'next/image';
 
 
-export default function AccountMenu() {
+export default function AccountMenu(props) {
   const cookies = parseCookies();
   const userid = cookies?.userId;
+  const {userPic} = props;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -49,7 +50,12 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Image src="/avatar.png" height={50} width={50} alt="coach avatar"className="rounded-full"/>
+            {userPic ? (
+              <Image src={`${userPic}`} height={50} width={50} alt="avatar"className="rounded-full"/>
+            ) : (
+              <Image src="/avatar.png" height={50} width={50} alt="avatar"className="rounded-full"/>
+            )}
+            
           </IconButton>
         </Tooltip>
       </Box>
