@@ -11,15 +11,17 @@ import CoachCard from "@/components/userpage/CoachCard";
 import ChartBar from "@/components/userpage/ChartBar";
 import BasicLineChart from "@/components/userpage/LineChart";
 import CoachBar from "@/components/userpage/CoachBar";
+import StudentCard from "@/components/userpage/StudentCard";
 // import Timeline from "@/components/userpage/Timeline";
 // import { CookieOutlined } from "@mui/icons-material";
 import SetUp from "@/components/userpage/SetUp";
 import Swal from "sweetalert2";
+import { Co2Sharp } from "@mui/icons-material";
 
 export default function Userpage() {
     const cookies = parseCookies();
     const [userData, setUserData] = useState(null);
-    // const [editCoach, setEditCoach] = useState(false);
+    const [studentsData, setStudentsData] = useState(null);
     const router = useRouter()
     const query = router.query
     const userid = query?.userid;
@@ -35,6 +37,16 @@ export default function Userpage() {
             },
         }).then((res) => {
             setUserData(res.data.data.user);
+        }).catch((err) => {
+            console.log(err);
+        });
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/${userid}/students`,{
+            headers: {
+                Authorization: `Bearer ${cookies.accessToken}`,
+            },
+        }).then((res) => {
+            console.log(res.data.data);
+            setStudentsData(res.data.data);
         }).catch((err) => {
             console.log(err);
         });
@@ -70,32 +82,19 @@ export default function Userpage() {
     return (
         <div className="flex flex-col min-h-screen bg-white dark:bg-gray-800 ">
             <Header />
-            <div className="flex flex-row justify-center gap-4 py-6">
+            <div className="flex flex-row gap-2 justify-center my-auto">
                 <div className="flex flex-col gap-2">
-                    <Avatar data={userData} setUserData={setUserData} cookies={cookies}/>
+                    <Avatar data={userData} setUserData={setUserData} cookies={cookies} isUserPage={isUserPage}/>
                     {userData?.coach_id ? (
                         <CoachBar cookies={cookies} coach_id={userData.coach_id} />
                     ): (
-                        isUserPage && <CoachCard cookies={cookies} setUserData={setUserData} />
+                        userData?.role?.includes('student') && isUserPage && <CoachCard cookies={cookies} setUserData={setUserData} />
                     )}
-                    
-                    
+                    {userData?.role?.includes('coach') && (<StudentCard studentsData={studentsData} />)}
                     {/* <OrgCard orgs={userData?.organizations}/> */}
                 </div>
-                <div>
-                    {/* <div className="flex items-center">
-                        {mockData?.slice(0,4).map((item, index) => (
-                            <ActCard userid={userid} data={item} key={item.id}>{item.part}</ActCard>
-                        ))}
-                        <button type="button" className="text-white h-7 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            More
-                            <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                            </svg>
-                        </button>
-                    </div> */}
-                    
-                    <div className="flex mb-4">
+                <div className="flex flex-col gap-2">
+                    <div className="flex gap-2">
                         <ChartBar cookies={cookies} userid={userid} />
                         <BasicLineChart cookies={cookies} userid={userid} isUserPage={isUserPage} />
                     </div>
