@@ -12,10 +12,16 @@ export default function StudentCard(props) {
                         <div className="flex flex-row mb-2 items-center gap-2">
                             { item.picture 
                                 ? (
-                                    <Image src={`${process.env.NEXT_PUBLIC_S3_URL}/${item.picture}`} height={50} width={50} alt="student avatar" className="rounded-full border dark:border-gray-700" />
+                                    <Image
+                                        src={`${process.env.NEXT_PUBLIC_S3_URL}/${item.picture}`}
+                                        alt="student avatar"
+                                        className="w-12 h-12 border rounded-full object-cover dark:border-gray-700" 
+                                        height={50}
+                                        width={50}
+                                    />
                                 )
                                 :(
-                                    <Image src="/avatar.png" height={50} width={50} alt="student avatar" className="rounded-full border dark:border-gray-700" />
+                                    <Image src="/avatar.png" height={50} width={50} alt="student avatar" className="w-12 h-12 rounded-full border dark:border-gray-700" />
                                 )}
                             <span>{item.name}</span>
                         </div>
