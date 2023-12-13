@@ -1,4 +1,5 @@
 import SideBarButton from "./SideBarButton";
+import Toggle from "./Toggle";
 
 export default function SideBar({setSelectedTag}) {
     const tags = [

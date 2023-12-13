@@ -9,28 +9,28 @@ export default function ShowDialogContent({activityData, editMode, setEditMode, 
         <ThemeProvider theme={preferredTheme === 'dark' ? darkTheme : lightTheme}>
             <DialogContent sx={{ paddingTop: "0", backgroundColor: preferredTheme === 'dark' ? "rgb(17 24 39)": "inherit" }}>
                 {activityData && (
-                <div className="dark:bg-gray-900">
-                    <div className="m-2">
-                       <div className="flex flex-wrap justify-between items-center">
-                            <div className="flex gap-2 items-center mb-2">
-                                <span className="w-16 font-semibold">ID:</span>
-                                <p>{activityData.id}</p>
-                            </div>
-                            <div className="flex gap-2 items-center mb-2">
-                                <span className="w-16 font-semibold">Date:</span>
-                                <p>{activityData.created_at.split(' ')[0].replaceAll('-', '/')}</p>
-                            </div>
-                            <div className="flex gap-2 items-center mb-2">
-                                <span className="w-16 font-semibold">Tags:</span>
-                                <div className="flex gap-1">
-                                    {editMode ? (
-                                        <MultiSelect setTags={(tags) => setUpdatedActivityData({ ...updatedActivityData, tags })} />
-                                    ) : (
-                                        activityData.tags &&
-                                            activityData.tags.map((tag) => (
-                                            <TagBadge key={tag} tag={tag} />
-                                        )))
-                                    }
+                    <div className="dark:bg-gray-900">
+                        <div className="m-2">
+                        <div className="flex flex-wrap justify-between items-center">
+                                <div className="flex gap-2 items-center mb-2">
+                                    <span className="w-16 font-semibold">ID:</span>
+                                    <p>{activityData.id}</p>
+                                </div>
+                                <div className="flex gap-2 items-center mb-2">
+                                    <span className="w-16 font-semibold">Date:</span>
+                                    <p>{activityData.created_at.split(' ')[0].replaceAll('-', '/')}</p>
+                                </div>
+                                <div className="flex gap-2 items-center mb-2">
+                                    <span className="w-16 font-semibold">Tags:</span>
+                                    <div className="flex gap-1">
+                                        {editMode ? (
+                                            <MultiSelect setTags={(tags) => setUpdatedActivityData({ ...updatedActivityData, tags })} />
+                                        ) : (
+                                            activityData.tags &&
+                                                activityData.tags.map((tag) => (
+                                                <TagBadge key={tag} tag={tag} />
+                                            )))
+                                        }
 
                                 </div>
                             </div>

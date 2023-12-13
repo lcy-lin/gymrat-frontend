@@ -10,9 +10,11 @@ import TableRow from '@mui/material/TableRow';
 import TagBadge from '../TagBadge';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import RowDialog from './RowDialog';
+import Toggle from './Toggle';
 import Swal from 'sweetalert2';
 import AlertMessages from '@/utils/alertMessages';
 import axios from 'axios';
+import Image from 'next/image';
 import { parseCookies } from 'nookies';
 
 const darkTheme = createTheme({
@@ -54,10 +56,50 @@ const columns = [
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: 'calories',
-    label: 'Calories Consumed',
+    id: 'publicity',
+    label: 'Public',
+    minWidth: 90,
     align: 'center',
-    minWidth: 100,
+  },
+];
+
+const columnsInStudentMode = [
+  {
+    id: 'id',
+    label: 'ID',
+    minWidth: 30,
+    align: 'center',
+  },
+  {
+    id: 'name',
+    label: 'Name',
+    minWidth: 30,
+    align: 'center',
+  },
+  {
+    id: 'picture',
+    label: 'Picture',
+    minWidth: 30,
+    align: 'center',
+  },
+  {
+    id: 'time',
+    label: 'Time',
+    minWidth: 30,
+    align: 'center',
+  },
+  {
+    id: 'tags',
+    label: 'Tags',
+    align: 'center',
+    minWidth: 60,
+  },
+  {
+    id: 'description',
+    label: 'Description',
+    align: 'center',
+    minWidth: 200,
+    format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'publicity',
@@ -67,26 +109,51 @@ const columns = [
   },
 ];
 
-function createData(id, time, tags, description, calories, publicity) {
-  calories = -calories;
+function createData(id, time, tags, description, publicity) {
   time = time.split(' ')[0].replaceAll('-', '/');
   publicity = publicity === 1 ? '✅' : '🔒';
-  return { id, time, tags, description, calories, publicity };
+  return { id, time, tags, description, publicity };
 };
 
-export default function ActTable({selectedTag, actData}) {
+function createDataInStudentMode(id, user_id, name, picture, time, tags, description, publicity) {
+  time = time.split(' ')[0].replaceAll('-', '/');
+  publicity = publicity === 1 ? '✅' : '🔒';
+  picture = picture ? `${process.env.NEXT_PUBLIC_S3_URL}/${picture}` : '/avatar.png';
+  return { id, user_id, name, picture, time, tags, description, publicity };
+};
+
+export default function ActTable({selectedTag, actData, studentMode, setStudentMode, selectedStudent, setSelectedStudent, coach}) {
   const rows = actData
-  ? actData?.map((activity) =>
-      createData(
-        activity.id,
-        activity.created_at,
-        activity.tags,
-        activity.description,
-        -200,
-        activity.publicity
-      )
-    )
+  ? !studentMode
+    ? actData
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+        .map((activity) =>
+          createData(
+            activity.id,
+            activity.created_at,
+            activity.tags,
+            activity.description,
+            activity.publicity
+          )
+        )
+    : actData
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+        .map((activity) =>
+          createDataInStudentMode(
+            activity.id,
+            activity.user_id,
+            activity.name,
+            activity.picture,
+            activity.created_at,
+            activity.tags,
+            activity.description,
+            activity.publicity
+          )
+        )
   : [];
+
+  console.log(actData);
+
   const [preferredTheme, setPreferredTheme] = React.useState('light');
 
   React.useEffect(() => {
@@ -180,9 +247,31 @@ export default function ActTable({selectedTag, actData}) {
 
   return (
     <div className="w-full">
-      <span>
-        <p className="text-xl font-semibold m-4 dark:text-white">{selectedTag?.emoji} {selectedTag?.category}</p>
+      <span className="flex flex-row items-center justify-between w-11/12">
+        {studentMode ? (
+          selectedStudent ? (
+            <div className="flex flex-row gap-2 items-center dark:text-white m-4">
+                <Image
+                  src={ selectedStudent?.picture ? `${process.env.NEXT_PUBLIC_S3_URL}/${selectedStudent?.picture}` : '/avatar.png'}
+                  alt={selectedStudent?.name}
+                  width={40}
+                  height={40}
+                  className="rounded-full"
+                />
+              {selectedStudent?.name}
+            </div>
+          ) : (
+            <h1 className="text-2xl font-semibold m-4 dark:text-white">Student Records</h1>
+          )
+        ) : (
+          <p className="text-xl font-semibold m-4 dark:text-white">
+            {selectedTag?.emoji} {selectedTag?.category}
+          </p>
+        )}
+
+        {coach && <Toggle studentMode={studentMode} setStudentMode={setStudentMode} setSelectedStudent={setSelectedStudent}/>}
       </span>
+
       <ThemeProvider theme={preferredTheme === 'dark' ? darkTheme : lightTheme}>
         <Paper 
           sx={{
@@ -202,17 +291,29 @@ export default function ActTable({selectedTag, actData}) {
                       backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'rgb(17 24 39)' : theme.palette.background.default,
                     }
                   }}>
-                  {columns.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ 
-                        minWidth: column.minWidth,
-                      }}
-                    >
-                      {column.label}
-                    </TableCell>
-                  ))}
+                  {studentMode  && !selectedStudent 
+                    ? (columnsInStudentMode.map((column) => (
+                        <TableCell
+                          key={column.id}
+                          align={column.align}
+                          style={{ 
+                            minWidth: column.minWidth,
+                          }}
+                        >
+                          {column.label}
+                        </TableCell>
+                      ))) 
+                    : (columns.map((column) => (
+                        <TableCell
+                          key={column.id}
+                          align={column.align}
+                          style={{ 
+                            minWidth: column.minWidth,
+                          }}
+                        >
+                          {column.label}
+                        </TableCell>
+                      )))}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -226,17 +327,31 @@ export default function ActTable({selectedTag, actData}) {
                         tabIndex={-1}
                         key={row.id}
                         onClick={() => handleClickOpen(row)}>
-                        {columns.map((column) => {
-                          
-                          const value = row[column.id];
-                          return (
-                            <TableCell key={column.id} align={column.align}>
-                              {Array.isArray(value) 
-                                ? value.map((tag, index) => <TagBadge key={index} tag={tag} />)
-                                : <TagBadge tag={value} />}
-                            </TableCell>
-                          );
-                        })}
+                          {studentMode && !selectedStudent
+                            ? (columnsInStudentMode.map((column) => {
+                              const value = row[column.id];
+                              return (
+                                <TableCell key={column.id} align={column.align}>
+                                    {column.id === 'picture' ? (
+                                      <Image src={value} alt="Student" className="rounded-full" width={40} height={40} />
+                                      ) : Array.isArray(value) ? (
+                                        value.map((tag, index) => <TagBadge key={index} tag={tag} />)
+                                      ) : (
+                                        <p className="text-xs">{value}</p>
+                                      )}
+                                </TableCell>
+                              );
+                            }))
+                            : (columns.map((column) => {
+                                const value = row[column.id];
+                                return (
+                                  <TableCell key={column.id} align={column.align}>
+                                    {Array.isArray(value) 
+                                      ? value.map((tag, index) => <TagBadge key={index} tag={tag} />)
+                                      : <TagBadge tag={value} />}
+                                  </TableCell>
+                                );
+                              }))}
                       </TableRow>
                     );
                   })}
@@ -256,6 +371,7 @@ export default function ActTable({selectedTag, actData}) {
                 preferredTheme={preferredTheme}
                 darkTheme={darkTheme}
                 lightTheme={lightTheme}
+                studentMode={studentMode}
               />
             </Table>
           </TableContainer>

@@ -6,7 +6,7 @@ import { Button } from "@mui/material";
 import axios from "axios";
 import Swal from "sweetalert2";
 import AlertMessages from "@/utils/alertMessages";
-export default function RowDialog({cookies, rowData, activityData, setActivityData, updatedActivityData, setUpdatedActivityData, openDialog, handleClose, handleClickDelete, editMode, setEditMode, preferredTheme, darkTheme, lightTheme}) {
+export default function RowDialog({cookies, rowData, activityData, setActivityData, updatedActivityData, setUpdatedActivityData, openDialog, handleClose, handleClickDelete, editMode, setEditMode, preferredTheme, darkTheme, lightTheme, studentMode}) {
     const handleClickUpdate = async (id) => {
       Swal.fire({
         title: 'Are you sure?',
@@ -73,18 +73,22 @@ export default function RowDialog({cookies, rowData, activityData, setActivityDa
             darkTheme={darkTheme}
             lightTheme={lightTheme}
           />
-          <div style={{ backgroundColor: preferredTheme === 'dark' ? "rgb(31 41 55)" : "inherit"}}>
-            {editMode ? (
-              <>
-                <Button onClick={handleCancel} variant="contained" color="error" sx={{ margin: "10px", color: "white"}}>Cancel</Button>
-                <Button onClick={() => handleClickUpdate(activityData.id)} variant="contained" sx={{ margin: "10px", color: "white"}}>Update</Button>
-              </>
-            ) : (
-              <Button onClick={() => setEditMode(!editMode)} variant="contained" sx={{ margin: "10px", color: "white"}}>Edit</Button>
-            )}
-            
-            <Button onClick={() => handleClickDelete(activityData.id)} variant="contained" color="error" sx={{ margin: "10px" }}>Delete</Button>
-          </div>
+          {
+            !studentMode &&
+              <div style={{ backgroundColor: preferredTheme === 'dark' ? "rgb(31 41 55)" : "inherit"}}>
+                {editMode ? (
+                  <>
+                    <Button onClick={handleCancel} variant="contained" color="error" sx={{ margin: "10px", color: "white"}}>Cancel</Button>
+                    <Button onClick={() => handleClickUpdate(activityData.id)} variant="contained" sx={{ margin: "10px", color: "white"}}>Update</Button>
+                  </>
+                ) : (
+                  <Button onClick={() => setEditMode(!editMode)} variant="contained" sx={{ margin: "10px", color: "white"}}>Edit</Button>
+                )}
+                
+                <Button onClick={() => handleClickDelete(activityData.id)} variant="contained" color="error" sx={{ margin: "10px" }}>Delete</Button>
+              </div>
+          }
+          
         </Dialog>
       </ThemeProvider>
     );
