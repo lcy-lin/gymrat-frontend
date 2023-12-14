@@ -58,7 +58,7 @@ export default function RowDialog({cookies, rowData, activityData, setActivityDa
           onClose={handleClose}
           sx = {{ zIndex: 2 }}
           >
-          <div style={{ display: "flex", justifyContent: "space-between", backgroundColor: preferredTheme === 'dark' ? "rgb(31 41 55)" : "inherit", }}>
+          <div style={{ display: "flex", justifyContent: "space-between", backgroundColor: preferredTheme === 'dark' ? "rgb(31 41 55)" : "#d1d5db", }}>
             <DialogTitle sx={{ fontSize: "28px", fontWeight: "600"}}>Detail Information</DialogTitle>
             <Button onClick={handleClose} variant="text" color="error" sx={{ margin: "10px" }}>❌</Button>
           </div>
@@ -75,17 +75,49 @@ export default function RowDialog({cookies, rowData, activityData, setActivityDa
           />
           {
             !studentMode &&
-              <div style={{ backgroundColor: preferredTheme === 'dark' ? "rgb(31 41 55)" : "inherit"}}>
+              <div style={{ backgroundColor: preferredTheme === 'dark' ? "rgb(31 41 55)" : "#d1d5db"}}>
                 {editMode ? (
                   <>
-                    <Button onClick={handleCancel} variant="contained" color="error" sx={{ margin: "10px", color: "white"}}>Cancel</Button>
-                    <Button onClick={() => handleClickUpdate(activityData.id)} variant="contained" sx={{ margin: "10px", color: "white"}}>Update</Button>
+                    <Button
+                      onClick={handleCancel}
+                      variant="contained"
+                      color="error"
+                      style={{
+                        margin: "10px",
+                        color: preferredTheme === 'dark' ? "white" : "rgb(31 41 55)",
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={() => handleClickUpdate(activityData.id)}
+                      variant="contained"
+                      sx={{ margin: "10px", color: preferredTheme === 'dark' ? "white" : "rgb(31 41 55)",}}
+                    >
+                      Update
+                    </Button>
                   </>
                 ) : (
-                  <Button onClick={() => setEditMode(!editMode)} variant="contained" sx={{ margin: "10px", color: "white"}}>Edit</Button>
+                  <Button
+                    onClick={() => setEditMode(!editMode)}
+                    variant="contained"
+                    sx={{
+                      margin: "10px",
+                      color: preferredTheme === 'dark' ? "white" : "rgb(31 41 55)",
+                    }}
+                  >
+                    Edit
+                  </Button>
                 )}
                 
-                <Button onClick={() => handleClickDelete(activityData.id)} variant="contained" color="error" sx={{ margin: "10px" }}>Delete</Button>
+                <Button
+                  onClick={() => handleClickDelete(activityData.id)}
+                  variant="contained"
+                  color="error"
+                  sx={{ margin: "10px", color: preferredTheme === 'dark' ? "white" : "rgb(31 41 55)", }}
+                >
+                    Delete
+                </Button>
               </div>
           }
           

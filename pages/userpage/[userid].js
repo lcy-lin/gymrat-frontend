@@ -53,34 +53,8 @@ export default function Userpage() {
     }, [cookies.accessToken, cookies.userId, userid]);
     
 
-    const mockData = [
-        {
-            'id': '1', 
-            'description': 'new pr 100kg 5 reps',
-            'timestamp': '2023-10-01 12:00:00',
-            'part': 'chest',
-        },
-        {
-            'id': '3', 
-            'description': 'legs day',
-            'timestamp': '2023-9-30 13:00:00',
-            'part': 'legs', 
-        },
-        {
-            'id': '4', 
-            'description': 'new pr pull up 10 reps',
-            'timestamp': '2023-9-28 13:00:00',
-            'part': 'back', 
-        },
-        {
-            'id': '6', 
-            'description': '',
-            'timestamp': '2023-9-25 13:00:00',
-            'part': 'arms', 
-        },
-    ];
     return (
-        <div className="flex flex-col min-h-screen bg-white dark:bg-gray-800 ">
+        <div className="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-800 ">
             <Header />
             <div className="flex flex-row gap-2 justify-center my-auto">
                 <div className="flex flex-col gap-2">

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { Edit } from "@mui/icons-material";
 
 export default function CoachBar(props) {
     const [coachData, setCoachData] = useState(null);
@@ -22,7 +23,10 @@ export default function CoachBar(props) {
     }, [coach_id, cookies.accessToken, cookies.userId]);
     return (
         <div className="flex flex-col border rounded-lg dark:text-white dark:border-gray-700 dark:bg-gray-800">
-            <p className="flex justify-center font-semibold mb-2 dark:bg-gray-700 rounded-t-lg p-2">My Coach</p>
+            <p className="flex justify-center font-semibold mb-2 dark:bg-gray-700 rounded-t-lg p-2">
+                My Coach
+                {/* <Edit /> */}
+            </p>
             <div className="pl-2 pb-2 pr-1">
                 {coachData && (
                     <Link href={`/userpage/${coachData?.id}`}>

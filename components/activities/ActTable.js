@@ -79,7 +79,7 @@ const columnsInStudentMode = [
   {
     id: 'picture',
     label: 'Picture',
-    minWidth: 30,
+    minWidth: 10,
     align: 'center',
   },
   {
@@ -151,8 +151,6 @@ export default function ActTable({selectedTag, actData, studentMode, setStudentM
           )
         )
   : [];
-
-  console.log(actData);
 
   const [preferredTheme, setPreferredTheme] = React.useState('light');
 
@@ -256,7 +254,7 @@ export default function ActTable({selectedTag, actData, studentMode, setStudentM
                   alt={selectedStudent?.name}
                   width={40}
                   height={40}
-                  className="rounded-full"
+                  className="rounded-full w-12 h-12 object-cover"
                 />
               {selectedStudent?.name}
             </div>
@@ -333,7 +331,10 @@ export default function ActTable({selectedTag, actData, studentMode, setStudentM
                               return (
                                 <TableCell key={column.id} align={column.align}>
                                     {column.id === 'picture' ? (
-                                      <Image src={value} alt="Student" className="rounded-full" width={40} height={40} />
+                                        <span className='flex justify-center w-full'>
+                                          <Image src={value} alt="Student" className="w-8 h-8 object-cover rounded-full" width={40} height={40} />
+                                        </span>
+                                        
                                       ) : Array.isArray(value) ? (
                                         value.map((tag, index) => <TagBadge key={index} tag={tag} />)
                                       ) : (

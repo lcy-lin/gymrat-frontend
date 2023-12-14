@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createTheme } from '@mui/material/styles';
-import RowDialog from '../activites/RowDialog';
+import RowDialog from '../activities/RowDialog';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
 

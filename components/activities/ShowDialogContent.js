@@ -4,10 +4,10 @@ import MultiSelect from "../dashboard/Select";
 import { ThemeProvider } from "@mui/material";
 import DetailTable from "./DetailTable";
 export default function ShowDialogContent({activityData, editMode, setEditMode, updatedActivityData, setUpdatedActivityData, preferredTheme, darkTheme, lightTheme}) {
-    const shadow = "min-w-16 mb-2 border p-2 rounded-lg dark:border-gray-600 dark:bg-gray-600"
+    const shadow = "min-w-16 mb-2 border p-2 rounded-lg bg-gray-300 dark:border-gray-600 dark:bg-gray-600"
     return(
         <ThemeProvider theme={preferredTheme === 'dark' ? darkTheme : lightTheme}>
-            <DialogContent sx={{ paddingTop: "0", backgroundColor: preferredTheme === 'dark' ? "rgb(17 24 39)": "inherit" }}>
+            <DialogContent sx={{ paddingTop: "0", backgroundColor: preferredTheme === 'dark' ? "rgb(17 24 39)": "#e5e7eb" }}>
                 {activityData && (
                     <div className="dark:bg-gray-900">
                         <div className="m-2">

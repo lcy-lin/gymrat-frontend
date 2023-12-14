@@ -75,7 +75,8 @@ export default function Avatar(props) {
                             ? (<EditRole roles={data.role} edit={edit} setEdit={setEdit} setUserData={setUserData} cookies={cookies} />)
                             : (
                                 <>
-                                    <div className="grid grid-cols-2 gap-1 mb-2">
+                                    <div
+                                        className={`grid gap-1 mb-2 ${data?.role.length === 2 ? 'grid-cols-1' : 'grid-cols-2'}`}>
                                         {data?.role
                                             .filter((item) => item !== 'user')
                                             .map((filteredItem) => (

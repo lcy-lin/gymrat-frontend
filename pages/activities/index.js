@@ -1,10 +1,10 @@
 import { useState, useEffect, use } from "react";
 import Header from "@/components/Header";
-import SideBar from "@/components/activites/SideBar";
-import ActTable from "@/components/activites/ActTable";
+import SideBar from "@/components/activities/SideBar";
+import ActTable from "@/components/activities/ActTable";
 import axios from "axios";
 import { parseCookies } from "nookies";
-import StudentSideBar from "@/components/activites/StudentSideBar";
+import StudentSideBar from "@/components/activities/StudentSideBar";
 
 export default function Activities() {
     const cookies = parseCookies();
@@ -71,7 +71,7 @@ export default function Activities() {
     }, [cookies.accessToken, selectedStudent, selectedStudent?.id, selectedTag, studentMode, user_id]);
 
     return (
-        <div className="dark:bg-gray-800">
+        <div className="bg-gray-100 dark:bg-gray-800">
             <Header />
             <div className="flex flex-row gap-4">
                 { studentMode 

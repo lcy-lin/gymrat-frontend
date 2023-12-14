@@ -28,10 +28,19 @@ export default function Weight() {
                 'Authorization': `Bearer ${cookies.accessToken}`
             }
         });
-        console.log(res);
-        AlertMessages.success('Weight added successfully');
-        setDate(new Date());
-        weightRef.current.value = '';
+        Swal.fire({
+            title: 'Weight added!',
+            text: "You can now view your weight in the user page.",
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Go to user page'
+        }).then((result) => {
+            setDate(new Date());
+            weightRef.current.value = '';
+            if (result.isConfirmed) {
+                window.location.href = `/userpage/${cookies.userId}`;
+            }
+        });
     }
     catch (err) {
         console.error(err);
@@ -40,7 +49,7 @@ export default function Weight() {
   };
   return (
     <div>
-      <form className="p-4 dark:bg-gray-700 flex flex-col items-center rounded-xl" onSubmit={handleSubmit}>
+      <form className="p-4 bg-gray-200 dark:bg-gray-700 flex flex-col items-center rounded-xl" onSubmit={handleSubmit}>
         <div className="w-full mb-2">
             <label htmlFor="weight" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Weight(kg)

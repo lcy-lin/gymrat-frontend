@@ -27,27 +27,91 @@ export default function Sheet() {
     newRowData[index] = data;
     setRowData(newRowData);
   };
+
   const createWorkout = async () => {
-    const data = {
-      user_id: cookie.userId,
-      tags: tags,
-      description: descriptionRef.current.value,
-      publicity: publicity === true ? 1 : 0,
-      movements: rowData,
-    };
-    axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/activities/create`, {
-        data: data
-      },{
-        headers: {
-          'Authorization': `Bearer ${cookie.accessToken}`
-        }}).then((res) => {
-          AlertMessages.success("Workout created!");
-          console.log(res);
-        }).catch((err) => {
-          AlertMessages.error("Workout creation failed!");
-          console.error(err);
-        });
-  }
+    if (tags.length === 0) {
+      AlertMessages.error("Please select at least one tag!");
+      return;
+    }
+    if (descriptionRef.current.value === "") {
+      AlertMessages.error("Please enter a description!");
+      return;
+    }
+    if (rowData.length === 0) {
+      AlertMessages.error("Please enter at least one movement!");
+      return;
+    }
+  
+    try {
+      for (const movement of rowData) {
+        if (movement.name === undefined || movement.name === "") {
+          AlertMessages.error("Please enter a name for each movement!");
+          return;
+        }
+        if (movement.rep_goal === undefined || movement.rep_goal === "") {
+          AlertMessages.error("Please enter a number of reps for each movement!");
+          return;
+        }
+        if (movement.num_of_sets === undefined || movement.num_of_sets === "") {
+          AlertMessages.error("Please enter a number of sets for each movement!");
+          return;
+        }
+        if (movement.weight === undefined || movement.weight === "") {
+          AlertMessages.error("Please enter a weight for each movement!");
+          return;
+        }
+        if (movement.description === undefined || movement.description === "") {
+          AlertMessages.error("Please enter a description for each movement!");
+          return;
+        }
+  
+        for (const set of movement.sets) {
+          if (set.reps_achieved === undefined || set.reps_achieved === "") {
+            AlertMessages.error("Please enter a number of reps for each set!");
+            return;
+          }
+          if (set.str_left === undefined || set.str_left === "") {
+            AlertMessages.error("Please enter everything for each set!");
+            return;
+          }
+        }
+      }
+  
+      const data = {
+        user_id: cookie.userId,
+        tags: tags,
+        description: descriptionRef.current.value,
+        publicity: publicity === true ? 1 : 0,
+        movements: rowData,
+      };
+  
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/activities/create`,
+        { data: data },
+        {
+          headers: {
+            Authorization: `Bearer ${cookie.accessToken}`,
+          },
+        }
+      );
+  
+      Swal.fire({
+        title: "Workout created!",
+        text: "You can now view your workout in the activities page.",
+        icon: "success",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Go to activities page",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "/activities";
+        }
+      });
+    } catch (err) {
+      AlertMessages.error("Workout creation failed!");
+      console.error(err);
+    }
+  };
+  
   return (
 
     <div className="flex flex-col items-center mb-2">

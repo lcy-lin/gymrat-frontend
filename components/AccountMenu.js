@@ -51,7 +51,7 @@ export default function AccountMenu(props) {
             aria-expanded={open ? 'true' : undefined}
           >
             {userPic ? (
-              <Image src={`${userPic}`} height={50} width={50} alt="avatar"className="rounded-full"/>
+              <Image src={`${userPic}`} height={50} width={50} alt="avatar"className="object-cover w-12 h-12 rounded-full"/>
             ) : (
               <Image src="/avatar.png" height={50} width={50} alt="avatar"className="rounded-full"/>
             )}

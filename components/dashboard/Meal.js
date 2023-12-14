@@ -45,7 +45,17 @@ export default function Meal() {
             }})
             .then(res => {
                 setLoading(false); 
-                AlertMessages.success("Meal added!");
+                Swal.fire({
+                    title: 'Meal created!',
+                      text: "You can now view your workout in the meals page.",
+                      icon: 'success',
+                      confirmButtonColor: '#3085d6',
+                      confirmButtonText: 'Go to meals page'
+                }).then((result) => {
+                      if (result.isConfirmed) {
+                        window.location.href = "/meals";
+                      }
+                    })
             })
             .catch(err => {
                 console.log(err);
@@ -53,7 +63,7 @@ export default function Meal() {
             });
     }
     return (
-        <div className="rounded-xl dark:bg-gray-700 p-4">
+        <div className="rounded-xl bg-gray-200 dark:bg-gray-700 p-4">
             <form onSubmit={handleSubmit} className="flex flex-col gap-2">
                 <label className="font-semibold dark:text-white">What did you eat?</label>
                 <input

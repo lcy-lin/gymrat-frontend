@@ -65,7 +65,7 @@ export default function MealsPage() {
 
     }, [cookies.accessToken, cookies.userId, endDate, startDate])
     return (
-        <div className="min-h-screen dark:bg-gray-800 flex flex-col">
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-800 flex flex-col">
             <Header />
             <span className="w-5/6 self-center">
                 

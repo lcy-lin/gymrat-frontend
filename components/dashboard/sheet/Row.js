@@ -77,7 +77,8 @@ export default function Row({num, data, index, onInputChange}) {
                         id="weight"
                         onChange={handleInputChange}
                         className="block w-20 h-9 p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="ex: 10kg"/> 
+                        placeholder="ex: 10kg"
+                    /> 
                 </span>
             </div>
             <span className="flex items-center flex-grow ml-16 mr-4 mb-4">
@@ -88,7 +89,8 @@ export default function Row({num, data, index, onInputChange}) {
                     onChange={handleInputChange}
                     className="block p-2.5 flex-grow text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Write your thoughts here..."
-                    required />
+                    required
+                />
             </span>
         
         <div className="flex flex-wrap ml-16 mb-4 gap-2">

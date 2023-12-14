@@ -9,8 +9,8 @@ export default function StudentButton (props) {
         >
             <div className="grid place-items-center mr-4">
             {picture 
-                ? <Image src={`${process.env.NEXT_PUBLIC_S3_URL}/${picture}`} alt={name} width={40} height={40} className="rounded-full" />
-                : <Image src="/avatar.png" alt={name} width={40} height={40} className="rounded-full" />
+                ? <Image src={`${process.env.NEXT_PUBLIC_S3_URL}/${picture}`} alt={name} width={40} height={40} className="object-cover w-12 h-12 rounded-full" />
+                : <Image src="/avatar.png" alt={name} width={40} height={40} className="object-cover w-12 h-12 rounded-full" />
             }
             </div>
             {name}

@@ -233,7 +233,7 @@ export default function DetailTable({ movements, updatedActivityData, setUpdated
     <ThemeProvider theme={theme}>
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
-          <TableHead style={{ backgroundColor: preferredTheme === 'dark' ? "rgb(31 41 55)" : "inherit"}}>
+          <TableHead style={{ backgroundColor: preferredTheme === 'dark' ? "rgb(31 41 55)" : "#9ca3af"}}>
             <TableRow>
               <TableCell />
               <TableCell>Name</TableCell>
@@ -243,7 +243,7 @@ export default function DetailTable({ movements, updatedActivityData, setUpdated
               <TableCell>Description</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody style={{ backgroundColor: preferredTheme === 'dark' ? "rgb(31 41 55)" : "inherit"}}>
+          <TableBody style={{ backgroundColor: preferredTheme === 'dark' ? "rgb(31 41 55)" : "#d1d5db"}}>
             {rows.map((row, idx) => (
               <Row key={row.name} idx={idx} editMode={editMode} updatedActivityData={updatedActivityData} setUpdatedActivityData={setUpdatedActivityData} row={row} />
             ))}
