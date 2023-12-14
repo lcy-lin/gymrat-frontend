@@ -18,8 +18,10 @@ export default function Sheet() {
   };
   const deleteMove = () => {
     setNumOfRows((prevNum) => Math.max(prevNum - 1, 1));
-    if (rowData[-1] === undefined)
+    if (Object.keys(rowData[rowData.length - 1]).length === 0 && rowData[rowData.length - 1].constructor === Object) {
+      console.log("empty");
       return;
+    }
     rowData.pop();
   };
   const handleRowDataChange = (index, data) => {

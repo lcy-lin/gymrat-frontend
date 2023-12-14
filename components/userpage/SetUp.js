@@ -29,6 +29,7 @@ export default function SetUp(props) {
             },
         }).then((res) => {
             setBodyData(res.data.data);
+
         }).catch((err) => {
             console.log(err);
             const error = err.response.data.error;
@@ -69,6 +70,12 @@ export default function SetUp(props) {
                     },
                 }).then((res) => {
                     setBodyData(res.data.data);
+                    Swal.fire({
+                        title: 'Update successful!',
+                        icon: 'success',
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#3085d6',
+                    })
                 }).catch((err) => {
                     console.log(err);
                 });
